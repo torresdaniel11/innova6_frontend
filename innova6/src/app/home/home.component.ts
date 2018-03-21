@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {ChatbotService} from '../_servicios/chatbot.service'
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,8 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private chatbot:ChatbotService) {
 
+  }
+
+  abrirChat(){
+    this.chatbot.setEstadoChat(true);
+  }
+
+  toggleChat(){
+    this.chatbot.toggleChat();
+  }
   ngOnInit() {
   }
 

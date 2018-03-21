@@ -1,27 +1,67 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {  RouterModule, Routes } from '@angular/router';
 
-//bootstrap
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+//librerias externas
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-//vistas
 
+//Servicios
+import { AuthService } from './_servicios/auth.service';
+import { ChatbotService } from './_servicios/chatbot.service';
+
+//vistas
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { QuienesSomosComponent } from './quienes-somos/quienes-somos.component';
+import { EquipoGtiComponent } from './equipo-gti/equipo-gti.component';
+import { CatalogoComponent } from './catalogo/catalogo.component';
+import { ContectenosComponent } from './contectenos/contectenos.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
+
+//layouts
+import { LayoutComponent } from './_layout/layout/layout.component';
+
+
+const appRoutes: Routes = [
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: 'index', component: HomeComponent },
+      { path: 'quienes_somos', component: QuienesSomosComponent },
+      { path: 'equipo_gti', component: EquipoGtiComponent },
+      { path: 'catalogo', component: CatalogoComponent },
+      { path: 'contectenos', component: ContectenosComponent },
+      { path: '**', redirectTo: 'index', pathMatch: 'full' }
+    ]
+  }
+
+
+];
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    QuienesSomosComponent,
+    EquipoGtiComponent,
+    CatalogoComponent,
+    ContectenosComponent,
+    ChatbotComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true }
+    )
   ],
-  providers: [],
+  providers: [AuthService, ChatbotService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

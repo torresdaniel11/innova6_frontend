@@ -1,22 +1,6 @@
 
 
-ul.nav.navbar-nav.navbar-left {
-    flex-direction: row;
-}
 
-.nav > li {
-    display: inline-block;
-    padding: 0 25px;
-}
-
-.bottom-nav {
-  position: absolute;
-  bottom: 0;
-  background-color: #2B8178;
-  width: 100%;
-  padding: 10px 0;
-  color: #EEFBFE;
-}
 
 #top_content{
   height: 25vh;
@@ -50,8 +34,7 @@ ul.nav.navbar-nav.navbar-left {
 
 
 #middle_content{
-  height:calc(70vh - 75px);
-  max-height: 350px;
+  height:calc(100vh - 210px);
 }
 
 .welcome_box{
@@ -60,4 +43,16 @@ ul.nav.navbar-nav.navbar-left {
   padding: 18px 10px;
   background-color: #2B8178;
   color: #EEFBFE;
+}
+
+#main{
+  background-image: url("/assets/images/background.jpg");
+    background-repeat: no-repeat;
+    height: calc(100vh - 60px);
+}
+
+@media only screen and (max-width: 767px) {
+    .col-arbol {
+        display: none;
+    }
 }
