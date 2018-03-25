@@ -25,3 +25,5 @@ Para este desarrollo hemos hecho uso de las siguientes tecnologias:
 * Git
 * Github
 * Heroku
+* JIRA
+* Confluence
