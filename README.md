@@ -1,6 +1,6 @@
 # MISO 4101 - Procesos de Desarrollo Agiles
 
-## Proyecto - Grupo 6
+## Proyecto GTI - Conecta-TE - Grupo 6 (Innova6)
 
 ### Participantes:
  * José Rafael Giraldo Tenorio
@@ -11,21 +11,16 @@
  
 
 ### Objetivo:
- Desarrollar una página Web que muestre las mejores promociones vigentes de varias ciudades de Colombia.
- 
- * Incluir categorías
- * Registro de usuarios
- * Comentarios a las promociones
- * Descripción de las promociones
- * Fechas de vigencia
- * Imagen de la promoción
- * Módulo de administración
+ Desarrollar una página Web para el grupo GTI - Conecta-TE de la Universidad de los Andes para poder tener acceso a un catalogo de informacion y servicios de consulta.
+
 
 ### Tecnologias:
 Para este desarrollo hemos hecho uso de las siguientes tecnologias:
 
 * Python
 * Django
+* Angular
+* PostgreSQL
 * PyCharm
 * Git
 * Github
