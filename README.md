@@ -20,3 +20,13 @@
  * Fechas de vigencia
  * Imagen de la promoción
  * Módulo de administración
+
+### Tecnologias:
+Para este desarrollo hemos hecho uso de las siguientes tecnologias:
+
+* Python
+* Django
+* PyCharm
+* Git
+* Github
+* Heroku
