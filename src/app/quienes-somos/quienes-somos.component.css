@@ -1,0 +1,354 @@
+
+
+
+
+#top_content{
+  height: 25vh;
+  max-height: 150px;
+  padding-top: 15px;
+}
+
+/*Estilos del logo de GTi ConectaTE*/
+.header_black{
+  display:block;
+  font-size: 2em;
+  line-height: 1.1;
+  font-weight: 600;
+}
+.header_green{
+  color: #2B8178;
+  margin-bottom: 0;
+  font-size: 4em;
+}
+
+/*Estilos de los logos de ConectaTE y universidad de los andes*/
+.logos li img {
+  display:inline-block;
+  width:  100%;
+}
+.navbar-nav.logos {
+  flex-direction: row;
+}
+
+.nav.logos > li {
+  padding: 0px 15px;
+  height: 160PX;
+  width: 340PX;
+  cursor: pointer;
+}
+
+/* Estilos del arbol */
+.col-arbol  div img {
+  max-height:100%;
+  width:auto;
+  max-width:100%;
+  position: absolute;
+  bottom: 10px;
+  left: 25px;
+}
+
+#middle_content{
+  height:calc(100vh - 210px);
+}
+/* ESTILOS DE LOS CONTAINERS Y CONTENIDOS DEL CONTAINER PRINCIPAL */
+.quienes-somos-container {
+  padding-top: 85px;
+}
+.qs-text-container {
+  padding-left: 65px;
+}
+.qs-tittle {
+  font-size: 4em;
+  color: #87868A;
+}
+.qs-text {
+  font-size: 1.2em;
+  color: #87868A;
+}
+.quienes-somos-box-container {
+  position: relative;
+}
+.qs-box-absolute {
+  position: absolute;
+  top: 40px;
+  width: 1200px;
+  z-index: 2;
+}
+.qs-box-md1 {
+  width: 100%;
+  max-width: 60px;
+}
+.qs-box-container {
+  background-color: #2B8178;
+  height: 100%;
+  max-height: 250px;
+  overflow: hidden;
+  padding: 15px;
+  color: #FFFFFF;
+}
+.qs-box-tittle {
+  font-size: 1.6em;
+}
+.qs-box-content {
+  font-size: 0.8em;
+}
+
+#main{
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  background-image: url("/assets/images/background.jpg");
+  display: table;
+  top: 0;
+  background-size: cover;
+  /*
+  background-repeat: no-repeat;
+  height: calc(100vh - 60px);*/
+}
+
+
+/* ========================================================================================================================
+   ====================================   ESTILOS PARA RESOLUCIONES MENORES DE 1440PX
+ */
+@media only screen and (max-width: 1440px) {
+  /*Estilos del logo de GTi ConectaTE*/
+  .header_black{
+    display:block;
+    font-size: 1em;
+    line-height: 1.1;
+    font-weight: 600;
+  }
+
+  .header_green{
+    color: #2B8178;
+    margin-bottom: 0;
+    font-size: 3em;
+  }
+
+  /*Estilos de los logos de ConectaTE y universidad de los andes*/
+  .logos li img {
+    display:inline-block;
+    width:  100%;
+  }
+  .navbar-nav.logos {
+    flex-direction: row;
+  }
+
+  .nav.logos > li {
+    padding: 0px 15px;
+    height: 100PX;
+    width: 240PX;
+    cursor: pointer;
+  }
+
+  /* Corrector altura div contenedor */
+  #middle_content{
+    height:calc(100vh - 175px);
+  }
+
+  .col-arbol  div img {
+    max-height:100%;
+    width:auto;
+    max-width:90%;
+    position: absolute;
+    bottom: 0px;
+    left: 25px;
+  }
+
+  /* ESTILOS DE LOS CONTAINERS Y CONTENIDOS DEL CONTAINER PRINCIPAL */
+  .quienes-somos-container {
+    padding-top: 75px;
+  }
+  .qs-text-container {
+    padding-left: 50px;
+  }
+  .qs-tittle {
+    font-size: 3em;
+    color: #87868A;
+  }
+  .qs-text {
+    font-size: 1em;
+    color: #87868A;
+  }
+  .quienes-somos-box-container {
+    position: relative;
+  }
+  .qs-box-absolute {
+    position: absolute;
+    top: 40px;
+    width: 1100px;
+    z-index: 2;
+  }
+  .qs-box-md1 {
+    width: 100%;
+    max-width: 20px;
+  }
+  .qs-box-container {
+    background-color: #2B8178;
+    height: 100%;
+    max-height: 250px;
+    overflow: hidden;
+    padding: 15px;
+    color: #FFFFFF;
+  }
+  .qs-box-tittle {
+    font-size: 1.1em;
+  }
+  .qs-box-content {
+    font-size: 0.75em;
+  }
+
+}
+
+
+
+/* ========================================================================================================================
+   ====================================   ESTILOS PARA RESOLUCIONES MENORES DE 1360PX
+ */
+
+@media only screen and (max-width: 1360px) {
+  /*Estilos del logo de GTi ConectaTE*/
+  .header_black{
+    display:block;
+    font-size: 1em;
+    line-height: 1.1;
+    font-weight: 600;
+  }
+
+  .header_green{
+    color: #2B8178;
+    margin-bottom: 0;
+    font-size: 3em;
+  }
+
+  /*Estilos de los logos de ConectaTE y universidad de los andes*/
+  .logos li img {
+    display:inline-block;
+    width:  100%;
+  }
+  .navbar-nav.logos {
+    flex-direction: row;
+  }
+
+  .nav.logos > li {
+    padding: 0px 15px;
+    height: 100PX;
+    width: 240PX;
+    cursor: pointer;
+  }
+
+  /* Corrector altura div contenedor */
+  #middle_content{
+    height:calc(100vh - 175px);
+  }
+
+  .col-arbol  div img {
+    max-height:100%;
+    width:auto;
+    max-width:90%;
+    position: absolute;
+    bottom: 0px;
+    left: 25px;
+  }
+
+  /* ESTILOS DE LOS CONTAINERS Y CONTENIDOS DEL CONTAINER PRINCIPAL */
+  .quienes-somos-container {
+    padding-top: 40px;
+  }
+  .qs-text-container {
+    padding-left: 55px;
+  }
+  .qs-tittle {
+    font-size: 2.4em;
+    color: #87868A;
+  }
+  .qs-text {
+    font-size: 0.8em;
+    color: #87868A;
+  }
+  .quienes-somos-box-container {
+    position: relative;
+  }
+  .qs-box-absolute {
+    position: absolute;
+    top: 30px;
+    width: 980px;
+    z-index: 2;
+  }
+  .qs-box-md1 {
+    width: 100%;
+    max-width: 20px;
+  }
+  .qs-box-container {
+    width: 80%;
+    background-color: #2B8178;
+    height: 100%;
+    max-height: 250px;
+    overflow: hidden;
+    padding: 15px;
+    color: #FFFFFF;
+  }
+  .qs-box-tittle {
+    font-size: 1em;
+  }
+  .qs-box-content {
+    font-size: 0.6em;
+  }
+
+
+}
+/* ========================================================================================================================
+   ====================================   ESTILOS PARA RESOLUCIONES MENORES DE 1024PX
+ */
+@media only screen and (max-width: 1024px) {
+
+  /* ESTILOS DE LOS CONTAINERS Y CONTENIDOS DEL CONTAINER PRINCIPAL */
+  .quienes-somos-container {
+    padding-top: 40px;
+  }
+  .qs-text-container {
+    padding-left: 55px;
+  }
+  .qs-tittle {
+    font-size: 2em;
+    color: #87868A;
+  }
+  .qs-text {
+    font-size: 0.8em;
+    color: #87868A;
+  }
+  .quienes-somos-box-container {
+    position: relative;
+  }
+  .qs-box-absolute {
+    position: absolute;
+    top: 30px;
+    width: 980px;
+    z-index: 2;
+  }
+  .qs-box-md1 {
+    width: 100%;
+    max-width: 20px;
+  }
+  .qs-box-container {
+    width: 80%;
+    background-color: #2B8178;
+    height: 100%;
+    max-height: 250px;
+    overflow: hidden;
+    padding: 15px;
+    color: #FFFFFF;
+  }
+  .qs-box-tittle {
+    font-size: 1em;
+  }
+  .qs-box-content {
+    font-size: 0.6em;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .col-arbol {
+    display: none;
+  }
+}
