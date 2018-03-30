@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Innova6
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.4.
@@ -26,34 +25,3 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-=======
-# MISO 4101 - Procesos de Desarrollo Agiles
-
-## Proyecto GTI - Conecta-TE - Grupo 6 (Innova6)
-
-### Participantes:
- * José Rafael Giraldo Tenorio
- * Fredy Gonzalo Captuayo Novoa
- * Wilmer Armando Rubio Rojas
- * Daniel Torres Laserna
- * Juan Carlos Arias Ramírez
- 
-
-### Objetivo:
-Desarrollar una página Web para el grupo GTI - Conecta-TE de la Universidad de los Andes para poder tener acceso a un catalogo de informacion y servicios de consulta.
-
-
-### Tecnologias:
-Para este desarrollo hemos hecho uso de las siguientes tecnologias:
-
-* Python
-* Django
-* Angular
-* PostgreSQL
-* PyCharm
-* Git
-* Github
-* Heroku
-* JIRA
-* Confluence
->>>>>>> 2e07a10616ec7e768df1aeaa1967dba7dce393f0
