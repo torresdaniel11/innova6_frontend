@@ -1,0 +1,62 @@
+.Aligner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #2B8178;
+}
+.align-login-contaiener{
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  max-width: 320px;
+  width: 100%;
+}
+/*LOGIN STYLES */
+.login-logo-container{
+  width: 45px;
+  padding: 5px;
+  border: 1px solid #f6f6f6;
+  text-align: center;
+  background-color: #f6f6f6;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+}
+.btn-login-container {
+  text-align: right;
+}
+.btn-login-container .btn-secondary {
+  color: #343a40;
+  background-color: #f6f6f6;
+  border-color: #f6f6f6;
+  width: 120px;
+  cursor: pointer;
+}
+.login-r-password a {
+  text-decoration: underline;
+  color: #ffffff;
+}
+.login-header-container {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 25px;
+}
+.login-i-character {
+  font-size: 7em;
+  margin-bottom: -25px;
+}
+.login-header-tittle {
+  font-size: 3em;
+}
+/* GTI LOGO STYLES */
+.gti-logo-container {
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+  color: #ffffff;
+}
+.gti-logo-container a {
+  color: #ffffff;
+  text-decoration: none;
+}

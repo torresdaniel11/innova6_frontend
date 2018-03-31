@@ -21,6 +21,8 @@ import { ChatbotComponent } from './chatbot/chatbot.component';
 
 //layouts
 import { LayoutComponent } from './_layout/layout/layout.component';
+import { AdminComponent } from './admin/admin.component';
+import { LoginComponent } from './login/login.component';
 
 
 const appRoutes: Routes = [
@@ -28,16 +30,17 @@ const appRoutes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
+      { path: '', component: HomeComponent },
       { path: 'index', component: HomeComponent },
       { path: 'quienes_somos', component: QuienesSomosComponent },
       { path: 'equipo_gti', component: EquipoGtiComponent },
       { path: 'catalogo', component: CatalogoComponent },
       { path: 'contectenos', component: ContectenosComponent },
-      { path: '**', redirectTo: 'index', pathMatch: 'full' }
-    ]
-  }
-
-
+    ],
+  },
+  { path: 'login', component: LoginComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: '**', redirectTo: 'index', pathMatch: 'full' },
 ];
 
 
@@ -50,7 +53,9 @@ const appRoutes: Routes = [
     CatalogoComponent,
     ContectenosComponent,
     ChatbotComponent,
-    LayoutComponent
+    LayoutComponent,
+    AdminComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

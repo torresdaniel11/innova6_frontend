@@ -1,0 +1,133 @@
+.admin-container {
+  background-color: #F8F9FA;
+  height: 100vh;
+  position: relative;
+}
+.bg-light {
+  background-color: #2B8178!important;
+  position: relative;
+  z-index: 1;
+}
+.gti-tittle {
+  color: #FFFFFF;
+}
+.main-content {
+  margin-left: 200px;
+  margin-top: 0;
+  padding: 0;
+  overflow: auto;
+}
+.breadcrumbs {
+  height: 52px;
+  padding: 15px 25px;
+  background-color: rgba(0,0,0,.03);
+}
+.container-dashboard {
+  padding: 15px 25px;
+}
+
+.person-tittle {
+  float: left;
+}
+.person-badge {
+  float: right;
+}
+/* NAV STYLES*/
+.user-container {
+  overflow: hidden;
+  width: 300px;
+  color: #ffffff;
+}
+.welcome-text{
+  float: left;
+  margin-right: 15px;
+  padding-top: 8px;
+}
+.user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  margin-right: 10px;
+  float: left;
+  overflow: hidden;
+  text-align: center;
+}
+.user-img img {
+  height: 40px;
+}
+.user-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-top: 8px;
+}
+/*LEFT SIDE MENU STYLES */
+.left-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 200px;
+  background-color: #2B8178;
+  z-index: 0;
+}
+.menu-tittle-container {
+  text-align: center;
+  height: 170px;
+  border-top: 1px solid #155724;
+  padding: 25px;
+}
+.menu-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  text-align: center;
+  color: #2B8178;
+  margin-left: 35px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  padding: 0;
+}
+.menu-icon img {
+  height: 80px;
+}
+.menu-title {
+  text-align: center;
+  color: #ffffff;
+}
+.left-side-menu ul li {
+  cursor: pointer;
+}
+.left-side-menu {
+  margin-top: 56px;
+}
+.menu-i-float {
+  float: left;
+}
+.menu-text-float {
+  float: right;
+}
+.left-side-menu ul li.list-group-item {
+  position: relative;
+  display: block;
+  padding: .75rem 1.25rem;
+  margin-bottom: -1px;
+  background-color: #2B8178;
+  border-bottom: 1px solid #155724;
+  border-top: 1px solid #155724;
+  color: #ffffff;
+}
+/* General styles */
+.hr-wstyle {
+  margin: 0;
+}
+.personal-clear {
+  margin: 15px 0;
+  clear: both;
+}
+.badge-light {
+  color: #ffffff;
+  background-color: #2B8178;
+}
