@@ -25,7 +25,7 @@ import { LayoutComponent } from './_layout/layout/layout.component';
 import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './login/login.component';
 import { TreeComponent } from './tree/tree.component';
-import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
+import { AdminLayoutComponent } from './_layout/admin-layout/admin-layout.component';
 import { ChatbotQuestionComponent } from './chatbot-question/chatbot-question.component';
 
 
@@ -77,8 +77,7 @@ const appRoutes: Routes = [
     NgbModule.forRoot(),
     AngularFontAwesomeModule,
     RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true }
+      appRoutes
     )
   ],
   providers: [AuthService, ChatbotService],

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ChatbotService} from '../_servicios/chatbot.service'
+import { ChatbotService } from '../_servicios/chatbot.service'
 
 @Component({
   selector: 'app-chatbot',
@@ -8,21 +8,73 @@ import {ChatbotService} from '../_servicios/chatbot.service'
 })
 export class ChatbotComponent implements OnInit {
 
-  estaAbierto:boolean;
-  constructor(private chatbot:ChatbotService) {
+  estaAbierto: boolean;
+  conversation_token: string;
+  constructor(private chatbot: ChatbotService) {
     this.estaAbierto = chatbot.abierto;
+    this.conversation_token = localStorage.getItem('conversation_token')
   }
 
   ngOnInit() {
-    this.chatbot.estadoChat.subscribe(estado =>{
+    this.chatbot.estadoChat.subscribe(estado => {
       this.estaAbierto = estado;
+    });
+
+    console.log(this.conversation_token)
+    if (this.conversation_token == undefined || this.conversation_token == null) {
+      //NO HAY CONVERSACION VAMOS A CREAR UNA
+      console.log('conseguir nuevo token');
+      this.crearConversacion();
+    } else {
+      // HAY UNA CONVERSACION VAMOS A VER SI EXISTE EN EL BACK
+      console.log('hay token')
+      this.recuperarConversacion();
+    }
+  }
+
+  crearConversacion(){
+    this.chatbot.crearConversacion().subscribe(result => {
+      console.log(result);
+      if(result['conversation_token']!=undefined){
+        localStorage.setItem('conversation_token', result['conversation_token']);
+        //siguiente
+        this.siguientePregunta()
+      }
+    }, error => {
+      console.log(<any>error);
     });
   }
 
-  cerrarChat(){
+  recuperarConversacion(){
+    this.chatbot.recuperarConversacion(this.conversation_token).subscribe(
+      result => {
+        console.log(result)
+        if(result['conversation_token']!=undefined){
+          //siguiente
+          this.siguientePregunta()
+        } else {
+        //CREAR UNA CONVERSACION ?
+      }
+      }, error => {
+        //CREAR CONVERSACION ??
+        console.log(<any>error);
+      }
+    );
+  }
+
+  siguientePregunta(){
+    this.chatbot.consultarPreguntaARealizar(this.conversation_token).subscribe(
+      result=>{
+        console.log(result)
+      }
+    )
+  }
+
+  cerrarChat() {
     this.chatbot.setEstadoChat(false);
   }
-  abrirChat(){
+
+  abrirChat() {
     this.chatbot.setEstadoChat(true);
   }
 

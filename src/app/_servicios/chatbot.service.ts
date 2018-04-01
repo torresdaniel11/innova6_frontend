@@ -23,26 +23,24 @@ export class ChatbotService {
 
   crearConversacion() {
     let param = JSON.stringify({});
-    let uri = 'http://innova6.herokuapp.com/conversations/'
-    let headers = new HttpHeaders().set('Content-Type', 'Application/json');
-    this.http.post(uri, param, { headers: headers, responseType: 'json' })
-      .subscribe(result => {
-        console.log(result)
-      },
-      error => {
-        console.log(<any>error);
-      });
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    let uri = hackurl+'http://innova6.herokuapp.com/conversations/'
+    let headers = new HttpHeaders().set('Content-Type', 'Application/json').set('Access-Control-Allow-Origin','*');
+    return this.http.post(uri, param, { headers: headers, responseType: 'json' });
     //end http post
   }
 
   recuperarConversacion(token: string) {
-    let uri = 'http://innova6.herokuapp.com/conversations/' + token;
-    this.http.get(uri)
-      .subscribe(result => {
-        console.log(result)
-      }, error => {
-        console.log(<any>error);
-      });
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    let uri = hackurl+'http://innova6.herokuapp.com/conversations/' + token;
+    return this.http.get(uri);
+    //end http get
+  }
+
+  consultarPreguntaARealizar(token){
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    let uri = hackurl+'https://innova6.herokuapp.com/conversations/'+token+'/questions/';
+    return this.http.get(uri);
     //end http get
   }
 
