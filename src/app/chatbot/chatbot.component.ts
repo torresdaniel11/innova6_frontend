@@ -72,13 +72,13 @@ export class ChatbotComponent implements OnInit {
       }
     );
   }
-//level 5 categorias
-  enviarRespuesta(userInput){
+  //level 5 categorias
+  enviarRespuesta(userInput) {
     let nuevoJson = {};
     nuevoJson['question_record_response'] = userInput;
     nuevoJson['question_record_conversation'] = this.currentConversacion;
     nuevoJson['question_record_question'] = this.currentPregunta;
-    this.chatbot.enviarRespuesta(this.conversation_token, nuevoJson).subscribe(result=>{
+    this.chatbot.enviarRespuesta(this.conversation_token, nuevoJson).subscribe(result => {
       console.log(result)
       this.siguientePregunta();
     });

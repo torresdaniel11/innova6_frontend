@@ -7,8 +7,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
-
 import { AppComponent } from './app.component';
+
 //Servicios
 import { AuthService } from './_servicios/auth.service';
 import { ChatbotService } from './_servicios/chatbot.service';
@@ -32,7 +32,6 @@ import { LoginComponent } from './landing/login/login.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { TreeComponent } from './admin/tree/tree.component';
 import { ChatbotQuestionComponent } from './admin/chatbot-question/chatbot-question.component';
-
 
 const appRoutes: Routes = [
   {
@@ -58,7 +57,6 @@ const appRoutes: Routes = [
   },
   { path: '**', redirectTo: 'index', pathMatch: 'full' },
 ];
-
 
 @NgModule({
   declarations: [

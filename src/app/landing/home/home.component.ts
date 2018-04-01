@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ChatbotService} from '../_servicios/chatbot.service'
+import {ChatbotService} from '../../_servicios/chatbot.service'
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
