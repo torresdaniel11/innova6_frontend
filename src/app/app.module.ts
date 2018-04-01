@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {  RouterModule, Routes } from '@angular/router';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 //librerias externas
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -72,6 +73,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     NgbModule.forRoot(),
     AngularFontAwesomeModule,
     RouterModule.forRoot(
