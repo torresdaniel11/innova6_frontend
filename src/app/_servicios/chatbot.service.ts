@@ -25,7 +25,7 @@ export class ChatbotService {
     let param = JSON.stringify({});
     let hackurl = 'https://cors-anywhere.herokuapp.com/';
     let uri = hackurl+'http://innova6.herokuapp.com/conversations/'
-    let headers = new HttpHeaders().set('Content-Type', 'Application/json').set('Access-Control-Allow-Origin','*');
+    let headers = new HttpHeaders().set('Content-Type', 'Application/json');
     return this.http.post(uri, param, { headers: headers, responseType: 'json' });
     //end http post
   }
@@ -42,6 +42,14 @@ export class ChatbotService {
     let uri = hackurl+'https://innova6.herokuapp.com/conversations/'+token+'/questions/';
     return this.http.get(uri);
     //end http get
+  }
+
+  enviarRespuesta(token:string, json){
+    let param = JSON.stringify(json);
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    let uri = hackurl+'http://innova6.herokuapp.com/question_records/'+token+'/questions/';
+    let headers = new HttpHeaders().set('Content-Type', 'Application/json');
+    return this.http.post(uri, param, { headers: headers, responseType: 'json' });
   }
 
 

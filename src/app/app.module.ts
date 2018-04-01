@@ -7,26 +7,31 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
+
+import { AppComponent } from './app.component';
 //Servicios
 import { AuthService } from './_servicios/auth.service';
 import { ChatbotService } from './_servicios/chatbot.service';
 
-//vistas
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { QuienesSomosComponent } from './quienes-somos/quienes-somos.component';
-import { EquipoGtiComponent } from './equipo-gti/equipo-gti.component';
-import { CatalogoComponent } from './catalogo/catalogo.component';
-import { ContectenosComponent } from './contectenos/contectenos.component';
-import { ChatbotComponent } from './chatbot/chatbot.component';
-
 //layouts
 import { LayoutComponent } from './_layout/layout/layout.component';
-import { AdminComponent } from './admin/admin.component';
-import { LoginComponent } from './login/login.component';
-import { TreeComponent } from './tree/tree.component';
 import { AdminLayoutComponent } from './_layout/admin-layout/admin-layout.component';
-import { ChatbotQuestionComponent } from './chatbot-question/chatbot-question.component';
+
+//----- vistas -----
+import { ChatbotComponent } from './chatbot/chatbot.component';
+
+//--landing
+import { HomeComponent } from './landing/home/home.component';
+import { QuienesSomosComponent } from './landing/quienes-somos/quienes-somos.component';
+import { EquipoGtiComponent } from './landing/equipo-gti/equipo-gti.component';
+import { CatalogoComponent } from './landing/catalogo/catalogo.component';
+import { ContectenosComponent } from './landing/contectenos/contectenos.component';
+import { LoginComponent } from './landing/login/login.component';
+
+//--admin
+import { AdminComponent } from './admin/admin/admin.component';
+import { TreeComponent } from './admin/tree/tree.component';
+import { ChatbotQuestionComponent } from './admin/chatbot-question/chatbot-question.component';
 
 
 const appRoutes: Routes = [

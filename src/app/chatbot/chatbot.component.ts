@@ -10,6 +10,8 @@ export class ChatbotComponent implements OnInit {
 
   estaAbierto: boolean;
   conversation_token: string;
+  currentConversacion;
+  currentPregunta;
   constructor(private chatbot: ChatbotService) {
     this.estaAbierto = chatbot.abierto;
     this.conversation_token = localStorage.getItem('conversation_token')
@@ -29,11 +31,12 @@ export class ChatbotComponent implements OnInit {
     }
   }
 
-  currentConversacion;
-  crearConversacion(){
+
+  crearConversacion() {
     this.chatbot.crearConversacion().subscribe(result => {
       console.log(result);
-      if(result['conversation_token']!=undefined){
+      if (result['conversation_token'] != undefined) {
+        this.currentConversacion = result;
         localStorage.setItem('conversation_token', result['conversation_token']);
         //siguiente pregunta
         this.siguientePregunta()
@@ -43,32 +46,43 @@ export class ChatbotComponent implements OnInit {
     });
   }
 
-  recuperarConversacion(){
+  recuperarConversacion() {
     this.chatbot.recuperarConversacion(this.conversation_token).subscribe(
       result => {
-        console.log(result)
-        if(result['conversation_token']!=undefined){
+        if (result['conversation_token'] != undefined) {
           //siguiente pregunta
+          this.currentConversacion = result;
           this.siguientePregunta()
         } else {
-        //CREAR UNA CONVERSACION ?
-      }
+          this.crearConversacion();
+        }
       }, error => {
-        //CREAR CONVERSACION ??
+        this.crearConversacion();
         console.log(<any>error);
       }
     );
   }
 
-  siguientePregunta(){
+  siguientePregunta() {
+    console.log(this.currentConversacion)
     this.chatbot.consultarPreguntaARealizar(this.conversation_token).subscribe(
-      result=>{
-        console.log(result)
+      result => {
+        console.log(result);
+        this.currentPregunta = result;
       }
-    )
+    );
   }
-
-
+//level 5 categorias
+  enviarRespuesta(userInput){
+    let nuevoJson = {};
+    nuevoJson['question_record_response'] = userInput;
+    nuevoJson['question_record_conversation'] = this.currentConversacion;
+    nuevoJson['question_record_question'] = this.currentPregunta;
+    this.chatbot.enviarRespuesta(this.conversation_token, nuevoJson).subscribe(result=>{
+      console.log(result)
+      this.siguientePregunta();
+    });
+  }
 
   cerrarChat() {
     this.chatbot.setEstadoChat(false);

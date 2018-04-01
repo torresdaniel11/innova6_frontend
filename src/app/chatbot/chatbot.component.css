@@ -1,7 +1,7 @@
 #chatbot{
   background-color:#EEFBFE;
   width: 300px;
-height: 400px;
+  height: 400px;
 }
 
 .header{
@@ -12,28 +12,33 @@ height: 400px;
 
 .body{
   height: 350px;
-background-color: white;
-border: 1px solid #2B8178;
-margin-bottom: 20px;
+  background-color: white;
+  border: 1px solid #2B8178;
+  margin-bottom: 20px;
 }
 
 .input_box{
   width: 100%;
-position: absolute;
-bottom: 21px;
+  position: absolute;
+  bottom: 21px;
 }
 
 .input_box > input{
   width: 268px;
-border: none;
-height: 38px;
-border-top: 1px solid;
+  border: none;
+  height: 38px;
+  border-top: 1px solid;
 }
 
 
 div#closedChat {
-    position: fixed;
-    right: 60px;
-    bottom: 80px;
-    background: #EEFBFE;
+  position: fixed;
+  right: 60px;
+  bottom: 80px;
+  background:0;
+}
+
+.openBot{
+  height: 58px;
+  width: 58px;
 }
