@@ -12,7 +12,8 @@ export class TreeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    $.getJSON("https://innova6.herokuapp.com/questions/", function (data) {
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    $.getJSON(hackurl+"https://innova6.herokuapp.com/questions/", function (data) {
       var questions = data;
 
       for( var i=0; i< questions.length; i++){

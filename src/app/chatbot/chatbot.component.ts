@@ -19,25 +19,23 @@ export class ChatbotComponent implements OnInit {
     this.chatbot.estadoChat.subscribe(estado => {
       this.estaAbierto = estado;
     });
-
     console.log(this.conversation_token)
     if (this.conversation_token == undefined || this.conversation_token == null) {
       //NO HAY CONVERSACION VAMOS A CREAR UNA
-      console.log('conseguir nuevo token');
       this.crearConversacion();
     } else {
       // HAY UNA CONVERSACION VAMOS A VER SI EXISTE EN EL BACK
-      console.log('hay token')
       this.recuperarConversacion();
     }
   }
 
+  currentConversacion;
   crearConversacion(){
     this.chatbot.crearConversacion().subscribe(result => {
       console.log(result);
       if(result['conversation_token']!=undefined){
         localStorage.setItem('conversation_token', result['conversation_token']);
-        //siguiente
+        //siguiente pregunta
         this.siguientePregunta()
       }
     }, error => {
@@ -50,7 +48,7 @@ export class ChatbotComponent implements OnInit {
       result => {
         console.log(result)
         if(result['conversation_token']!=undefined){
-          //siguiente
+          //siguiente pregunta
           this.siguientePregunta()
         } else {
         //CREAR UNA CONVERSACION ?
@@ -69,6 +67,8 @@ export class ChatbotComponent implements OnInit {
       }
     )
   }
+
+
 
   cerrarChat() {
     this.chatbot.setEstadoChat(false);
