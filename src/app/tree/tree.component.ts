@@ -23,7 +23,6 @@ export class TreeComponent implements OnInit {
           "<span class='tree-question-tittle'>" + questions[i].question_description +"</span>" +
           "</div>" +
           "<div class='col-md-4 tree-events-questions'>" +
-          "<span class='tree-question-date'>31-03-2018</span>" +
           "<span class='tree-question-edit'>" +
           "<button id='"+ questions[i].id +"' type='button' class='btn btn-primary btn-sm'>" +
           "<i class='fa fa-pencil' aria-hidden='true'></i>" +
@@ -31,10 +30,6 @@ export class TreeComponent implements OnInit {
           "</button>" +
           "</span>" +
           "<span class='tree-question-edit'>" +
-          "<button  type='button' class='btn btn-danger btn-sm'>" +
-          "<i class='fa fa-times' aria-hidden='true'></i>" +
-          "Eliminar" +
-          "</button>" +
           "</span>" +
           "</div>" +
           "</div>" +
@@ -55,3 +50,30 @@ export class TreeComponent implements OnInit {
   }
 
 }
+
+/*
+* $("#tree-questions").append(
+          "<li class='list-group-item'>" +
+          "<div class='row'>"+
+          "<div class='col-md-8'>" +
+          "<span class='tree-question-tittle'>" + questions[i].question_description +"</span>" +
+          "</div>" +
+          "<div class='col-md-4 tree-events-questions'>" +
+          "<span class='tree-question-date'>31-03-2018</span>" +
+          "<span class='tree-question-edit'>" +
+          "<button id='"+ questions[i].id +"' type='button' class='btn btn-primary btn-sm'>" +
+          "<i class='fa fa-pencil' aria-hidden='true'></i>" +
+          "Editar" +
+          "</button>" +
+          "</span>" +
+          "<span class='tree-question-edit'>" +
+          "<button  type='button' class='btn btn-danger btn-sm'>" +
+          "<i class='fa fa-times' aria-hidden='true'></i>" +
+          "Eliminar" +
+          "</button>" +
+          "</span>" +
+          "</div>" +
+          "</div>" +
+          "</li>"
+        );
+        */
