@@ -23,6 +23,9 @@ import { ChatbotComponent } from './chatbot/chatbot.component';
 import { LayoutComponent } from './_layout/layout/layout.component';
 import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './login/login.component';
+import { TreeComponent } from './tree/tree.component';
+import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
+import { ChatbotQuestionComponent } from './chatbot-question/chatbot-question.component';
 
 
 const appRoutes: Routes = [
@@ -39,7 +42,14 @@ const appRoutes: Routes = [
     ],
   },
   { path: 'login', component: LoginComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: '',
+    component: AdminLayoutComponent ,
+    children: [
+      {path: 'admin', component: AdminComponent },
+      {path: 'admin/chatbot', component: TreeComponent },
+      {path: 'admin/chatbot/:id', component: ChatbotQuestionComponent },
+    ]
+  },
   { path: '**', redirectTo: 'index', pathMatch: 'full' },
 ];
 
@@ -55,7 +65,10 @@ const appRoutes: Routes = [
     ChatbotComponent,
     LayoutComponent,
     AdminComponent,
-    LoginComponent
+    LoginComponent,
+    TreeComponent,
+    AdminLayoutComponent,
+    ChatbotQuestionComponent
   ],
   imports: [
     BrowserModule,

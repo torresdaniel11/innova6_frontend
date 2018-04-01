@@ -1,0 +1,75 @@
+<div>
+  <div class="admin-container">
+
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand gti-tittle" href="/admin">
+        GTI Conecta-TE
+      </a>
+      <div class="user-container">
+        <div class="welcome-text">Bienvenido</div>
+        <div class="user-img"><img src="../../assets/images/personajes/5.fw.png"/></div>
+        <div class="user-name" >Alberto Patricio De Los Rios</div>
+      </div>
+    </nav>
+
+    <section class="left-box">
+      <div class="left-side-menu">
+        <div class="menu-tittle-container">
+          <div class="menu-icon"><img src="../../assets/images/personajes/5.fw.png"/></div>
+          <div class="menu-title"><i class="fa fa-bars" aria-hidden="true"></i> Menú Principal</div>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-action">
+            <div class="menu-i-float">
+              <i class="fa fa-tachometer" aria-hidden="true"></i>
+              <span><a href="/admin">&nbsp; Dashboard</a></span>
+            </div>
+            <div class="menu-text-float">
+              <span class="badge badge-pill"><i class="fa fa-caret-right" aria-hidden="true"></i></span>
+            </div>
+          </li>
+          <li class="list-group-item list-group-item-action flex-column align-items-star">
+            <div class="menu-i-float">
+              <i class="fa fa-list" aria-hidden="true"></i>
+              <span>&nbsp; Artículos</span>
+            </div>
+            <div class="menu-text-float">
+              <span class="badge  badge-pill"><i class="fa fa-caret-right" aria-hidden="true"></i></span>
+            </div>
+          </li>
+          <li class="list-group-item list-group-item-action flex-column align-items-star">
+            <div class="menu-i-float">
+              <i class="fa fa-comment" aria-hidden="true"></i>
+              <span><a href="admin/chatbot">&nbsp; Chatbot</a></span>
+            </div>
+            <div class="menu-text-float">
+              <span class="badge  badge-pill"><i class="fa fa-caret-right" aria-hidden="true"></i></span>
+            </div>
+          </li>
+          <li class="list-group-item list-group-item-action flex-column align-items-star">
+            <div class="menu-i-float">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              <span>&nbsp; Profile</span>
+            </div>
+            <div class="menu-text-float">
+              <span class="badge  badge-pill"><i class="fa fa-caret-right" aria-hidden="true"></i></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="main-content">
+      <div class="breadcrumbs">
+        <i class="fa fa-tachometer" aria-hidden="true"></i>
+        <span class="breadcrumbs-tittle"> Dashboard</span>
+      </div>
+      <hr class="hr-wstyle">
+      <div class="container-dashboard">
+        <div id="main">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

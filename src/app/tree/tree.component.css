@@ -1,0 +1,25 @@
+/* LI QUESTIONS STYLES */
+.tree-question-tittle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-top: 8px;
+  width: 100%;
+  max-width: 920px;
+}
+.tree-new-question {
+  padding: 15px 0;
+}
+.tree-events-questions {
+  text-align: right;
+}
+.tree-events-questions button, .tree-new-question button {
+  cursor: pointer;
+}
+.tree-question-date {
+  margin-top: 3px;
+  margin-right: 10px;
+}
+.tree-question-edit{
+  margin-right: 5px;
+}
