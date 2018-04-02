@@ -38,7 +38,6 @@ a{
 
 .float_chatbot{
   position: fixed;
-<<<<<<< HEAD
   right: 75px;
   bottom: 70px;
   z-index: 6;
@@ -57,9 +56,7 @@ a{
 .footer-container-navbar {
   position: relative;
   z-index: 2;
-=======
   left: 53%;
   top: 138px;
   z-index: 10;
->>>>>>> 2950fe27e45662fd30e984fd1e8c66513c29c9e3
 }
