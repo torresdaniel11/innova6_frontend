@@ -38,6 +38,7 @@ a{
 
 .float_chatbot{
   position: fixed;
-  right: 75px;
-  bottom: 70px;
+  left: 53%;
+  top: 138px;
+  z-index: 10;
 }

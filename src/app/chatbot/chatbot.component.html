@@ -4,7 +4,8 @@
     <div class="col-12">
       <div class="header">
         <div style="float:left">
-          Chatbot
+          <img class="openBot" src="assets/images/ro_bot.png" />
+          <span class="openHeader">Chatbot grupo de tecnología Contecta-TE</span>
         </div>
         <div style="float:right">
           <a (click)="cerrarChat()">X</a>
@@ -13,8 +14,16 @@
     </div>
     <div class="col-12">
       <div class="body">
+        <div class="conversacion" id="chat_body" #conversation>
+          <div *ngFor="let mensaje of mensajes" [ngClass]="(mensaje.de=='chatbot')?'msj_chatbot':'msj_usuario'" >
+            <div class="mensaje" [innerHTML]="mensaje.mensaje"></div>
+          </div>
+        </div>
         <div class="input_box">
-          <input type="text" />
+          <input [(ngModel)]="input" (keyup)="onKey($event)" type="text" />
+        </div>
+        <div class="cta_box">
+          <button (click)="enviar()">Enviar</button>
         </div>
       </div>
     </div>
