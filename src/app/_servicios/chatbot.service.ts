@@ -6,9 +6,11 @@ import { Observable } from 'rxjs/Observable';
 export class ChatbotService {
   abierto: boolean;
   @Output() estadoChat: EventEmitter<any> = new EventEmitter();
+  conversation_token:string;
 
   constructor(public http: HttpClient) {
-    this.abierto = false;
+    this.abierto = true;
+    this.conversation_token = sessionStorage.getItem('conversation_token');
   }
 
   toggleChat() {

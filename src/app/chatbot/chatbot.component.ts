@@ -18,9 +18,10 @@ export class ChatbotComponent implements OnInit {
 
   constructor(private chatbot: ChatbotService) {
     this.estaAbierto = chatbot.abierto;
-    this.conversation_token = sessionStorage.getItem('conversation_token')
+    this.conversation_token = chatbot.conversation_token;
     this.input = "";
     this.mensajes = [];
+
   }
 
   ngOnInit() {
@@ -44,6 +45,7 @@ export class ChatbotComponent implements OnInit {
       console.log(result);
       if (result['conversation_token'] != undefined) {
         this.currentConversacion = result;
+        this.conversation_token = result['conversation_token'];
         sessionStorage.setItem('conversation_token', result['conversation_token']);
         //siguiente pregunta
         this.siguientePregunta()
@@ -73,17 +75,26 @@ export class ChatbotComponent implements OnInit {
   siguientePregunta() {
     console.log(this.currentConversacion)
     console.log(this.conversation_token)
-    this.chatbot.consultarPreguntaARealizar(this.conversation_token).subscribe(
-      result => {
-        console.log(result);
-        this.currentPregunta = result;
-        console.log(result['question_description']);
-        this.pushMensaje('chatbot',result['question_description'] )
-      }, error => {
-        console.log(<any>error);
-        console.log(error.error)
-      }
-    );
+    if(this.conversation_token == null || this.conversation_token == undefined){
+      console.log("pere tantico")
+      console.log(this.conversation_token);
+    } else {
+      this.chatbot.consultarPreguntaARealizar(this.conversation_token).subscribe(
+        result => {
+          console.log(result);
+          this.currentPregunta = result;
+          console.log(result['question_description']);
+          this.pushMensaje('chatbot',result['question_description'] )
+          if(result['question_replace']){
+            console.log("la magica")
+          }
+        }, error => {
+          console.log(<any>error);
+          console.log(error.error)
+        }
+      );
+    }
+
   }
 
   enviar() {

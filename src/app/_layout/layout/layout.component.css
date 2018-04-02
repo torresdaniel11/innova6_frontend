@@ -6,10 +6,6 @@
   display: table;
   top: 0;
   background-size: cover;
-  /*
-  background-image: url("/assets/images/background.jpg");
-  background-repeat: no-repeat;
-  height: calc(100vh - 60px);*/
 }
 
 ul.nav.navbar-nav.navbar-left {
@@ -37,8 +33,9 @@ a{
 }
 
 .float_chatbot{
-  position: fixed;
-  left: 53%;
-  top: 138px;
+  position: absolute;
+  right: 55px;
+  bottom: 85px;
+  border-radius: 13px;
   z-index: 10;
 }
