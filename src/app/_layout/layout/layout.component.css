@@ -54,6 +54,9 @@ a{
   z-index: 2;
   left: 53%;
   top: 138px;
->>>>>>> origin/master
   z-index: 10;
+}
+
+.footer-container-navbar[_ngcontent-c1] {
+    position: initial;
 }

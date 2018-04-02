@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ChatbotService } from '../_servicios/chatbot.service'
 declare var $: any;
 
@@ -16,12 +16,12 @@ export class ChatbotComponent implements OnInit {
   mensajes;
   input: string;
 
-  constructor(private chatbot: ChatbotService) {
+  constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef) {
     this.estaAbierto = chatbot.abierto;
     this.conversation_token = chatbot.conversation_token;
     this.input = "";
     this.mensajes = [];
-
+    this.ref.markForCheck();
   }
 
   ngOnInit() {
@@ -38,11 +38,11 @@ export class ChatbotComponent implements OnInit {
       // HAY UNA CONVERSACION VAMOS A VER SI EXISTE EN EL BACK
       this.recuperarConversacion();
     }
+    this.printCategorias();
   }
 
   crearConversacion() {
     this.chatbot.crearConversacion().subscribe(result => {
-      console.log(result);
       if (result['conversation_token'] != undefined) {
         this.currentConversacion = result;
         this.conversation_token = result['conversation_token'];
@@ -73,32 +73,31 @@ export class ChatbotComponent implements OnInit {
   }
 
   siguientePregunta() {
-    console.log(this.currentConversacion)
-    console.log(this.conversation_token)
-    if(this.conversation_token == null || this.conversation_token == undefined){
+    if (this.conversation_token == null || this.conversation_token == undefined) {
       console.log("pere tantico")
-      console.log(this.conversation_token);
     } else {
       this.chatbot.consultarPreguntaARealizar(this.conversation_token).subscribe(
         result => {
-          console.log(result);
           this.currentPregunta = result;
-          console.log(result['question_description']);
-          this.pushMensaje('chatbot',result['question_description'] )
-          if(result['question_replace']){
-            console.log("la magica")
+          var pregunta = this.currentConversacion.conversation_name == "" ? result['question_description'] : this.currentConversacion.conversation_name + ", " + result['question_description'];
+          if (result['question_replace']) {
+            console.log("la magica");
+            this.arrayOpciones().then(methodResult => {
+              this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
+            }).catch(error => {
+              console.log(error);
+            })
+          } else {
+            this.pushMensaje('chatbot', pregunta)
           }
         }, error => {
-          console.log(<any>error);
           console.log(error.error)
         }
       );
     }
-
   }
 
   enviar() {
-    console.log(this.input);
     if (this.input.length) {
       this.enviarRespuesta(this.input);
       this.input = "";
@@ -119,8 +118,8 @@ export class ChatbotComponent implements OnInit {
     nuevoJson['question_record_response'] = userInput;
     nuevoJson['question_record_conversation'] = this.currentConversacion;
     nuevoJson['question_record_question'] = this.currentPregunta;
-    console.log(JSON.stringify(nuevoJson))
     this.chatbot.enviarRespuesta(this.conversation_token, nuevoJson).subscribe(result => {
+      this.currentConversacion = result;
       this.siguientePregunta();
     }, error => {
       console.log(<any>error);
@@ -128,11 +127,53 @@ export class ChatbotComponent implements OnInit {
     });
   }
 
-  pushMensaje(de:string, mensaje:string){
+  printCategorias() {
+    return new Promise((resolve, reject) => {
+      var result_string: string = "";
+      this.chatbot.getCategorias().subscribe(result => {
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let cat = result[i].category_name;
+          result_string += "<span class='hola'>" + cat + "</span>";
+        }
+        resolve(result_string);
+      }, error => {
+        console.log(<any>error);
+        reject(error.error);
+      })
+    })
+  }
+
+  arrayOpciones() {
+    return new Promise((resolve, reject) => {
+      var result_array = [];
+      this.chatbot.getCategorias().subscribe(result => {
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let cat = result[i].category_name;
+          result_array.push(cat);
+        }
+        resolve(result_array);
+      }, error => {
+        console.log(<any>error);
+        reject(error.error);
+      })
+    })
+  }
+
+  pushMensaje(de: string, mensaje: string) {
     this.mensajes.push({
       "de": de,
       "mensaje": mensaje
     });
+    this.scrollBottom();
+  }
+
+  pushMensajeConOpciones(de: string, mensaje: string, opciones) {
+    this.mensajes.push({
+      "de": de,
+      "mensaje": mensaje,
+      "opciones": opciones
+    });
+    console.log(this.mensajes);
     this.scrollBottom();
   }
 
@@ -151,7 +192,7 @@ export class ChatbotComponent implements OnInit {
     this.scrollBottom();
   }
 
-  scrollBottom(){
+  scrollBottom() {
     setTimeout(function() { $("#chat_body").scrollTop($("#chat_body")[0].scrollHeight); }, 10)
   }
 

@@ -128,7 +128,7 @@
     width:auto;
     max-width:90%;
     position: absolute;
-    bottom: 0px;
+    bottom: -1px;
     left: 25px;
   }
 

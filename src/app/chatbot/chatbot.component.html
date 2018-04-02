@@ -16,14 +16,20 @@
       <div class="body">
         <div class="conversacion" id="chat_body" #conversation>
           <div *ngFor="let mensaje of mensajes" [ngClass]="(mensaje.de=='chatbot')?'msj_chatbot':'msj_usuario'" >
-            <div class="mensaje" [innerHTML]="mensaje.mensaje"></div>
+            <div class="mensaje" >{{mensaje.mensaje}}
+              <div *ngFor="let opcion of mensaje.opciones">
+                <li>
+                  <a (click)="set(opcion)">{{opcion}}</a>
+                </li>
+              </div>
+            </div>
           </div>
         </div>
         <div class="input_box">
-          <input [(ngModel)]="input" (keyup)="onKey($event)" type="text" />
+          <input id="user-chatbot-input" [(ngModel)]="input" (keyup)="onKey($event)" type="text" />
         </div>
         <div class="cta_box">
-          <button (click)="enviar()">Enviar</button>
+          <button id="chatbot-user-button" (click)="enviar()">Enviar</button>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 export class ChatbotService {
   abierto: boolean;
   @Output() estadoChat: EventEmitter<any> = new EventEmitter();
-  conversation_token:string;
+  conversation_token: string;
 
   constructor(public http: HttpClient) {
     this.abierto = true;
@@ -26,7 +26,7 @@ export class ChatbotService {
   crearConversacion() {
     let param = JSON.stringify({});
     let hackurl = 'https://cors-anywhere.herokuapp.com/';
-    let uri = hackurl+'http://innova6.herokuapp.com/conversations/'
+    let uri = hackurl + 'http://innova6.herokuapp.com/conversations/'
     let headers = new HttpHeaders().set('Content-Type', 'Application/json');
     return this.http.post(uri, param, { headers: headers, responseType: 'json' });
     //end http post
@@ -34,24 +34,30 @@ export class ChatbotService {
 
   recuperarConversacion(token: string) {
     let hackurl = 'https://cors-anywhere.herokuapp.com/';
-    let uri = hackurl+'http://innova6.herokuapp.com/conversations/' + token;
+    let uri = hackurl + 'http://innova6.herokuapp.com/conversations/' + token;
     return this.http.get(uri);
     //end http get
   }
 
-  consultarPreguntaARealizar(token){
+  consultarPreguntaARealizar(token) {
     let hackurl = 'https://cors-anywhere.herokuapp.com/';
-    let uri = hackurl+'https://innova6.herokuapp.com/conversations/'+token+'/questions/';
+    let uri = hackurl + 'https://innova6.herokuapp.com/conversations/' + token + '/questions/';
     return this.http.get(uri);
     //end http get
   }
 
-  enviarRespuesta(token:string, json){
+  enviarRespuesta(token: string, json) {
     let param = JSON.stringify(json);
     let hackurl = 'https://cors-anywhere.herokuapp.com/';
-    let uri = hackurl+'http://innova6.herokuapp.com/question_records/'+token+'/questions/';
+    let uri = hackurl + 'http://innova6.herokuapp.com/question_records/' + token + '/questions/';
     let headers = new HttpHeaders().set('Content-Type', 'Application/json');
     return this.http.post(uri, param, { headers: headers, responseType: 'json' });
+  }
+
+  getCategorias() {
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    let uri = hackurl + 'http://innova6.herokuapp.com/categories/';
+    return this.http.get(uri);
   }
 
 
