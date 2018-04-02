@@ -40,4 +40,20 @@ a{
   position: fixed;
   right: 75px;
   bottom: 70px;
+  z-index: 6;
+}
+
+#nav_footer {
+  position: relative;
+}
+.footer-carrousel-img{
+  position: absolute;
+  left: 0;
+  top: -30px;
+  z-index: 0;
+}
+
+.footer-container-navbar {
+  position: relative;
+  z-index: 2;
 }

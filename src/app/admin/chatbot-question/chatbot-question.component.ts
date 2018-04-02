@@ -22,7 +22,7 @@ export class ChatbotQuestionComponent implements OnInit {
       get_id_question = parseInt(split_url[(length_split_url - 1)]);
     // ==========================================================================================
     // Getting data information of question table
-    $.getJSON(hackurl + "https://innova6.herokuapp.com/questions/", function(data) {
+    $.getJSON(hackurl+"https://innova6.herokuapp.com/questions/", function(data) {
       const questions = data;
       for (var i = 0; i < questions.length; i++) {
         const parse_id_value = parseInt(questions[i].id);
@@ -46,7 +46,7 @@ export class ChatbotQuestionComponent implements OnInit {
     });
     // ==========================================================================================
     // Getting data information of question table
-    $.getJSON(hackurl + "https://innova6.herokuapp.com/categories/", function(data) {
+    $.getJSON(hackurl+"https://innova6.herokuapp.com/categories/", function(data) {
       const categories = data;
       for (var i = 0; i < categories.length; i++) {
         $('.dropdown-categories').append(
@@ -81,7 +81,7 @@ export class ChatbotQuestionComponent implements OnInit {
 
       $.ajax({
         type: 'PUT',
-        url: hackurl + "https://innova6.herokuapp.com/questions/" + get_id_question + "/",
+        url: hackurl+"https://innova6.herokuapp.com/questions/" + get_id_question + "/",
         data: JSON.stringify({
           id: get_id_question,
           question_name: qts_name,
