@@ -84,6 +84,11 @@
   flex-wrap: wrap;
 }
 
+.footer-carrousel-img {
+  position: absolute;
+  left: 0;
+  bottom: 53px;
+}
 /* ========================================================================================================================
    ====================================   ESTILOS PARA RESOLUCIONES MENORES DE 1440PX
  */
