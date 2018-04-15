@@ -12,7 +12,7 @@
   color: #FFFFFF;
 }
 .main-content {
-  margin-left: 200px;
+  margin-left: 270px;
   margin-top: 0;
   padding: 0;
 }
@@ -69,7 +69,7 @@
   top: 0;
   left: 0;
   height: 100vh;
-  width: 200px;
+  width: 270px;
   background-color: #2B8178;
   z-index: 0;
 }
@@ -86,7 +86,7 @@
   background-color: #ffffff;
   text-align: center;
   color: #2B8178;
-  margin-left: 35px;
+  margin-left: 74px;
   margin-bottom: 15px;
   overflow: hidden;
   padding: 0;
@@ -100,6 +100,9 @@
 }
 .left-side-menu ul li {
   cursor: pointer;
+}
+.left-side-menu ul li:hover, .left-side-menu ul li:focus  {
+  background-color: #217067 !important;
 }
 .left-side-menu {
   margin-top: 56px;
@@ -123,6 +126,7 @@
   border-bottom: 1px solid #155724;
   border-top: 1px solid #155724;
   color: #ffffff;
+  border-radius: 0;
 }
 /* General styles */
 .hr-wstyle {
