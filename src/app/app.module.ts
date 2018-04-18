@@ -9,6 +9,12 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
 
+// Graphics ng2-charts
+import { ChartsModule } from 'ng2-charts';
+
+// Datatable angular2-datatable
+import {TableModule} from 'primeng/table';
+
 // Servicios
 import { AuthService } from './_servicios/auth.service';
 import { ChatbotService } from './_servicios/chatbot.service';
@@ -89,7 +95,9 @@ const appRoutes: Routes = [
     AngularFontAwesomeModule,
     RouterModule.forRoot(
       appRoutes
-    )
+    ),
+    ChartsModule,
+    TableModule
   ],
   providers: [AuthService, ChatbotService, AdminService],
   bootstrap: [AppComponent]

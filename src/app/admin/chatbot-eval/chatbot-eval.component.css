@@ -1,0 +1,20 @@
+.btn-export-container {
+  padding: 5px 15px;
+}
+.btn-export-tabla {
+  margin-right: 15px;
+  cursor: pointer;
+}
+.btn-export-selected {
+  cursor: pointer;
+}
+/* FILTER CONTAINER STYLES */
+.filter-table-container {
+  padding: 5px 15px;
+}
+
+/* TABLE STYLES */
+#Evaluation-chatbot-table .ui-table .ui-widget-header  {
+  background: transparent !important;
+  background: linear-gradient(to bottom, #f6f7f900 0%, #ebedf000 100%) !important;
+}

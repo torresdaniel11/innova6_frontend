@@ -24,9 +24,12 @@
     "@angular/router": "^5.0.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.1",
     "angular-font-awesome": "^3.1.2",
+    "angular2-datatable": "^0.6.0",
     "bootstrap": "4.0.0-beta.2",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
+    "ng2-charts": "^1.6.0",
+    "primeng": "^5.2.4",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },

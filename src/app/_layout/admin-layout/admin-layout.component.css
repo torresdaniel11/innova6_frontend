@@ -1,7 +1,7 @@
 .admin-container {
   background-color: #F8F9FA;
-  height: 100vh;
   position: relative;
+  height: 100%;
 }
 .bg-light {
   background-color: #2B8178!important;
@@ -25,6 +25,7 @@
   padding: 15px 25px;
   position: relative;
   z-index: 1;
+  height: 100vh;
 }
 
 .person-tittle {
@@ -68,7 +69,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   width: 270px;
   background-color: #2B8178;
   z-index: 0;
