@@ -18,3 +18,7 @@
   background: transparent !important;
   background: linear-gradient(to bottom, #f6f7f900 0%, #ebedf000 100%) !important;
 }
+
+.center-btn-ver{
+  text-align: center;
+}

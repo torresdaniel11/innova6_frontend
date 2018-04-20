@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import {  RouterModule, Routes } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -12,8 +13,15 @@ import { AppComponent } from './app.component';
 // Graphics ng2-charts
 import { ChartsModule } from 'ng2-charts';
 
-// Datatable angular2-datatable
+// Datatable PRIMENG and others
 import {TableModule} from 'primeng/table';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {GrowlModule} from 'primeng/growl';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
+import {EditorModule} from 'primeng/editor';
+import {DropdownModule} from 'primeng/dropdown';
 
 // Servicios
 import { AuthService } from './_servicios/auth.service';
@@ -34,6 +42,8 @@ import { EquipoGtiComponent } from './landing/equipo-gti/equipo-gti.component';
 import { CatalogoComponent } from './landing/catalogo/catalogo.component';
 import { ContectenosComponent } from './landing/contectenos/contectenos.component';
 import { LoginComponent } from './landing/login/login.component';
+import { ArticlesEditComponent } from './admin/articles-edit/articles-edit.component';
+import { ArticleViewComponent } from './landing/article-view/article-view.component';
 
 // --admin
 import { AdminComponent } from './admin/admin/admin.component';
@@ -41,6 +51,8 @@ import { TreeComponent } from './admin/tree/tree.component';
 import { ChatbotQuestionComponent } from './admin/chatbot-question/chatbot-question.component';
 import { ChatbotEvalComponent } from './admin/chatbot-eval/chatbot-eval.component';
 import { ChatbotEvalConversationComponent } from './admin/chatbot-eval-conversation/chatbot-eval-conversation.component';
+import { ArticlesComponent } from './admin/articles/articles.component';
+
 
 const appRoutes: Routes = [
   {
@@ -53,6 +65,7 @@ const appRoutes: Routes = [
       { path: 'equipo_gti', component: EquipoGtiComponent },
       { path: 'catalogo', component: CatalogoComponent },
       { path: 'contectenos', component: ContectenosComponent },
+      { path: 'article/:id', component: ArticleViewComponent },
     ],
   },
   { path: 'login', component: LoginComponent },
@@ -63,7 +76,9 @@ const appRoutes: Routes = [
       {path: 'admin/chatbot', component: TreeComponent },
       {path: 'admin/chatbot/:id', component: ChatbotQuestionComponent },
       {path: 'admin/chatbot_eval', component: ChatbotEvalComponent },
-      {path: 'admin/chatbot_eval/:id', component: ChatbotEvalConversationComponent }
+      {path: 'admin/chatbot_eval/:id', component: ChatbotEvalConversationComponent },
+      {path: 'admin/articles', component: ArticlesComponent },
+      {path: 'admin/articles/:id', component: ArticlesEditComponent }
     ]
   },
   { path: '**', redirectTo: 'index', pathMatch: 'full' },
@@ -85,10 +100,14 @@ const appRoutes: Routes = [
     AdminLayoutComponent,
     ChatbotQuestionComponent,
     ChatbotEvalComponent,
-    ChatbotEvalConversationComponent
+    ChatbotEvalConversationComponent,
+    ArticlesComponent,
+    ArticlesEditComponent,
+    ArticleViewComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     NgbModule.forRoot(),
@@ -97,9 +116,15 @@ const appRoutes: Routes = [
       appRoutes
     ),
     ChartsModule,
-    TableModule
+    TableModule,
+    GrowlModule,
+    ConfirmDialogModule,
+    EditorModule,
+    DropdownModule,
+    MessagesModule,
+    MessageModule
   ],
-  providers: [AuthService, ChatbotService, AdminService],
+  providers: [AuthService, ChatbotService, AdminService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
