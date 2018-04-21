@@ -14,7 +14,6 @@
 Desarrollar una página Web para el grupo GTI - Conecta-TE de la Universidad de los Andes para poder tener acceso a un catalogo de informacion y servicios de consulta.
 
 
-
 ### Tecnologias:
 Para este desarrollo hemos hecho uso de las siguientes tecnologias:
 
