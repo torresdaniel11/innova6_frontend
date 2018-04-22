@@ -1,0 +1,40 @@
+<div>
+  <section id="top_content container-fluid">
+    <div class="container-fluid">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav navbar-left">
+            <li>
+              <div>
+                <h1 class="header_green"><b>GTI Contecta-TE</b></h1>
+                <span class="header_black">
+                  GRUPO TECNOLOGÍA
+                </span >
+                <span class="header_black">
+                  CONECTA-TE
+                </span >
+              </div>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right logos">
+            <li><a href="https://conectate.uniandes.edu.co/" [target]="'_blank'"><img   src="assets/images/logo_conectate.png" alt="Conecta-te logo"  /></a></li>
+            <li><a href="https://uniandes.edu.co" [target]="'_blank'"><img   src="assets/images/Logo.png" alt="uniandes logo" style="margin-top: 10px;"  /></a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </section>
+  <section id="middle_content" class="container-fluid article-middle-content">
+    <div class="article-title">
+      <h1>{{conversations.article_tittle}}</h1>
+      <hr style="border-top: 1px solid rgba(0, 0, 0, 0.25);">
+      <div class="article-marks">
+        <span><b>Categoria:</b> {{categories}}</span> | <span><b>slug:</b> {{conversations.article_slug}}</span>
+      </div>
+      <hr style="border-top: 1px solid rgba(0, 0, 0, 0.25);">
+    </div>
+    <div id="content-container">
+      <div class="article-content" innerHTML="{{conversations.article_content}}"></div>
+    </div>
+  </section>
+</div>
