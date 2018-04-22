@@ -16,6 +16,7 @@ export class ChatbotComponent implements OnInit {
   currentPregunta;
   mensajes;
   input: string;
+  verFrecuentes=false;
 
   constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef) {
     this.estaAbierto = chatbot.abierto;
@@ -96,7 +97,7 @@ export class ChatbotComponent implements OnInit {
           } else if(result['question_load_question']){
             // PREGUNTAS FRECUENTES
             this.arrayPreguntasFrecuentes().then(methodResult => {
-              this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
+              this.pushMensajeConPreguntas('chatbot', pregunta, methodResult);
             }).catch(error => {
               console.log(error);
             });
@@ -213,6 +214,15 @@ export class ChatbotComponent implements OnInit {
       "de": de,
       "mensaje": mensaje,
       "opciones": opciones
+    });
+    this.scrollBottom();
+  }
+
+  pushMensajeConPreguntas(de: string, mensaje: string, preguntas) {
+    this.mensajes.push({
+      "de": de,
+      "mensaje": mensaje,
+      "preguntas": preguntas
     });
     this.scrollBottom();
   }
