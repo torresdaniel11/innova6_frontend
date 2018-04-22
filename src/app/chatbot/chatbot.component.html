@@ -22,6 +22,13 @@
                   <a (click)="set(opcion)">{{opcion}}</a>
                 </li>
               </div>
+              <div *ngIf="mensaje?.ratingYN">
+                <!--  -->
+              </div>
+
+              <div *ngIf="mensaje?.rating15">
+                <p-rating [(ngModel)]="val"></p-rating>
+              </div>
             </div>
           </div>
         </div>

@@ -15,6 +15,7 @@ import { ChartsModule } from 'ng2-charts';
 
 // Datatable PRIMENG and others
 import {TableModule} from 'primeng/table';
+import {RatingModule} from 'primeng/rating';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {GrowlModule} from 'primeng/growl';
@@ -117,6 +118,7 @@ const appRoutes: Routes = [
     ),
     ChartsModule,
     TableModule,
+    RatingModule,
     GrowlModule,
     ConfirmDialogModule,
     EditorModule,
