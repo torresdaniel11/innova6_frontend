@@ -14,6 +14,7 @@ import { ChartsModule } from 'ng2-charts';
 
 // Datatable angular2-datatable
 import {TableModule} from 'primeng/table';
+import {RatingModule} from 'primeng/rating';
 
 // Servicios
 import { AuthService } from './_servicios/auth.service';
@@ -97,7 +98,8 @@ const appRoutes: Routes = [
       appRoutes
     ),
     ChartsModule,
-    TableModule
+    TableModule,
+    RatingModule
   ],
   providers: [AuthService, ChatbotService, AdminService],
   bootstrap: [AppComponent]
