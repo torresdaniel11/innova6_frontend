@@ -38,7 +38,7 @@ export class TreeComponent implements OnInit {
         );
       }
 
-      console.log(questions)
+      //console.log(questions)
     }).fail(function () {
       return "Ups! something happen";
     });

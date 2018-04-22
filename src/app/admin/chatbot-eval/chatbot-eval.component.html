@@ -1,0 +1,56 @@
+<div>
+  <div class="card">
+    <div class="card-body">
+      <h3>Evaluación del servicio del chatbot</h3>
+      <hr>
+      <p-table id="Evaluation-chatbot-table" #dt [columns]="cols" [value]="conversations" selectionMode="multiple" [(selection)]="selectedConversations" [paginator]="true" [rows]="10" [resizableColumns]="true">
+        <ng-template pTemplate="caption">
+          <div class="ui-helper-clearfix">
+            <div class="row">
+              <div class="col-md-12 btn-export-container">
+                <button ngClass="btn btn-sm btn-primary btn-export-tabla" type="button"  (click)="dt.exportCSV()" style="float:left;">
+                  <i class="fa fa-download" aria-hidden="true"></i> Exportar tabla
+                </button>
+                <button ngClass="btn btn-sm btn-primary btn-export-selected" type="button" (click)="dt.exportCSV({selectionOnly:true})" style="float:left">
+                  <i class="fa fa-hand-pointer-o" aria-hidden="true"></i> Exportar campos seleccionados
+                </button>
+              </div>
+              <hr>
+              <div class="col-md-12 filter-table-container">
+                <div style="text-align: right">
+                  <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                  <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col *ngFor="let col of columns" [style.width]="col.width">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns" class="ui-resizable-column">
+              <div ngClass="center-btn-ver" *ngIf="col.header == 'Consultas'; else other_row">
+                <button [routerLink]="'/admin/chatbot_eval/user_chatbot:?'+rowData[col.field]" style="cursor: pointer" ngClass="btn btn-sm btn-success">
+                  Ver &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i>
+                </button>
+              </div>
+              <ng-template #other_row> {{rowData[col.field]}} </ng-template>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
