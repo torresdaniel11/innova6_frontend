@@ -8,10 +8,10 @@
           <div class="ui-helper-clearfix">
             <div class="row">
               <div class="col-md-12 btn-export-container">
-                <button ngClass="btn btn-sm btn-primary btn-export-tabla" type="button" pButton icon="fa-file-o" iconPos="left" label="All Data" (click)="dt.exportCSV()" style="float:left">
+                <button ngClass="btn btn-sm btn-primary btn-export-tabla" type="button"  (click)="dt.exportCSV()" style="float:left;">
                   <i class="fa fa-download" aria-hidden="true"></i> Exportar tabla
                 </button>
-                <button ngClass="btn btn-sm btn-primary btn-export-selected" type="button" pButton icon="fa-file" iconPos="left" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})" style="float:left">
+                <button ngClass="btn btn-sm btn-primary btn-export-selected" type="button" (click)="dt.exportCSV({selectionOnly:true})" style="float:left">
                   <i class="fa fa-hand-pointer-o" aria-hidden="true"></i> Exportar campos seleccionados
                 </button>
               </div>
@@ -41,8 +41,12 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
           <tr [pSelectableRow]="rowData">
             <td *ngFor="let col of columns" class="ui-resizable-column">
-              <button [routerLink]="'/admin/chatbot_eval/user_chatbot:?'+rowData[col.field]" style="cursor: pointer" ngClass="btn btn-sm btn-success" *ngIf="col.header == 'Consultas'">Ver consulta</button>
-              {{changeDateFormat(rowData[col.field], col.header )}}
+              <div ngClass="center-btn-ver" *ngIf="col.header == 'Consultas'; else other_row">
+                <button [routerLink]="'/admin/chatbot_eval/user_chatbot:?'+rowData[col.field]" style="cursor: pointer" ngClass="btn btn-sm btn-success">
+                  Ver &nbsp; <i class="fa fa-caret-right" aria-hidden="true"></i>
+                </button>
+              </div>
+              <ng-template #other_row> {{rowData[col.field]}} </ng-template>
             </td>
           </tr>
         </ng-template>

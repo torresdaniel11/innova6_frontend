@@ -141,3 +141,17 @@
   color: #ffffff;
   background-color: #2B8178;
 }
+
+.ui-dialog-mask {
+  position: relative !important;
+  width: 100%;
+  height: 100%;
+}
+.ui-widget-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
