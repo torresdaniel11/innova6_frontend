@@ -13,3 +13,18 @@
   color: #ffffff;
   background-color: #2B8178;
 }
+.close-window-admin {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.close-window-admin button:nth-child(1) {
+  color: #343a40;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,.125);
+}
+.close-window-admin button:nth-child(2) {
+  color: tomato;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,.125);
+}

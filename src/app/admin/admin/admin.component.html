@@ -1,6 +1,52 @@
 <div>
-  <!--
+
   <div class="row">
+    <div class="col-md-12" *ngIf="windowClose">
+      <div class="card">
+        <div class="card-body">
+          <div class="close-window-admin">
+            <button (click)="hideWindow()" type="button" class="btn btn-light"><i class="fa fa-window-maximize" aria-hidden="true"></i></button>
+            <button (click)="closeWindow()" type="button" class="btn btn-light"><i class="fa fa-window-close" aria-hidden="true"></i></button>
+          </div>
+          <h3>Preguntas de evaluación del serivicio</h3>
+          <hr>
+          <div class="row" *ngIf="selectWindow">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5>¿El chatbot le fué fácil de usar?</h5>
+                  <div style="display: block">
+                    <canvas baseChart
+                            [data]="doughnutChartData1"
+                            [labels]="doughnutChartLabels1"
+                            [chartType]="doughnutChartType1"
+                            (chartHover)="chartHovered1($event)"
+                            (chartClick)="chartClicked1($event)"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5>¿Le fué útil las respuestas entregadas?</h5>
+                  <div style="display: block">
+                    <canvas baseChart
+                            [data]="doughnutChartData2"
+                            [labels]="doughnutChartLabels2"
+                            [chartType]="doughnutChartType2"
+                            (chartHover)="chartHovered2($event)"
+                            (chartClick)="chartClicked2($event)"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--
     <div class="col-md-4 personal-clear">
       <div class="card box-shadow">
         <div class="card-header">
@@ -69,6 +115,7 @@
 
       </div>
     </div>
+    -->
   </div>
-  -->
+
 </div>

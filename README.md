@@ -27,3 +27,15 @@ Para este desarrollo hemos hecho uso de las siguientes tecnologias:
 * Heroku
 * JIRA
 * Confluence
+
+
+### Integracion Continua:
+Para este desarrollo hemos hecho uso de la siguiente tecnologia para el manejo de la integracion continua:
+
+* Travis
+
+
+### Analisis de Codigo Estatico:
+Para este desarrollo hemos hecho uso de la siguiente tecnologia para el analisis de codigo estatico:
+
+* Codacy

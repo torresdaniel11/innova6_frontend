@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ChatbotService } from '../_servicios/chatbot.service'
+import { ChatbotService } from '../_servicios/chatbot.service';
+import {RatingModule} from 'primeng/rating';
 declare var $: any;
 
 @Component({
@@ -79,15 +80,36 @@ export class ChatbotComponent implements OnInit {
       this.chatbot.consultarPreguntaARealizar(this.conversation_token).subscribe(
         result => {
           this.currentPregunta = result;
+          console.log(result)
           var pregunta = this.currentConversacion.conversation_name == "" ? result['question_description'] : this.currentConversacion.conversation_name + ", " + result['question_description'];
           if (result['question_replace']) {
-            console.log("la magica");
-            this.arrayOpciones().then(methodResult => {
+            // CATEGORIAS
+            this.arrayCategorias().then(methodResult => {
               this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
             }).catch(error => {
               console.log(error);
-            })
+            });
+          } else if(result['question_platform']){
+            //PLATAFORMA
+            let plataformas = ["Moodle", "Sicua"]
+            this.pushMensajeConOpciones('chatbot', pregunta, plataformas);
+          } else if(result['question_load_question']){
+            // PREGUNTAS FRECUENTES
+            this.arrayPreguntasFrecuentes().then(methodResult => {
+              this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
+            }).catch(error => {
+              console.log(error);
+            });
+          } else if(result['question_load_article']){
+            //RECURSO
+          } else if(result['question_evaluate_one']){
+            //EVALUACION SI O NO
+          } else if(result['question_evaluate_two']){
+            //EVALUACION RATING
+          } else if(result['question_finish']){
+            //FIN CONVERSACION
           } else {
+            //PREGUNTA SENCILLA
             this.pushMensaje('chatbot', pregunta)
           }
         }, error => {
@@ -143,7 +165,7 @@ export class ChatbotComponent implements OnInit {
     })
   }
 
-  arrayOpciones() {
+  arrayCategorias() {
     return new Promise((resolve, reject) => {
       var result_array = [];
       this.chatbot.getCategorias().subscribe(result => {
@@ -151,6 +173,25 @@ export class ChatbotComponent implements OnInit {
           let cat = result[i].category_name;
           result_array.push(cat);
         }
+        console.log(result_array)
+
+        resolve(result_array);
+      }, error => {
+        console.log(<any>error);
+        reject(error.error);
+      })
+    })
+  }
+
+  arrayPreguntasFrecuentes(){
+    return new Promise((resolve, reject) => {
+      var result_array = [];
+      this.chatbot.getPreguntasFrecuentes(this.conversation_token).subscribe(result => {
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let pf = result[i].frequent_questions_name;
+          result_array.push(pf);
+        }
+        console.log(result_array)
         resolve(result_array);
       }, error => {
         console.log(<any>error);
@@ -173,7 +214,6 @@ export class ChatbotComponent implements OnInit {
       "mensaje": mensaje,
       "opciones": opciones
     });
-    console.log(this.mensajes);
     this.scrollBottom();
   }
 
