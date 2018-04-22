@@ -15,9 +15,7 @@ import { ChartsModule } from 'ng2-charts';
 
 // Datatable PRIMENG and others
 import {TableModule} from 'primeng/table';
-<<<<<<< HEAD
 import {RatingModule} from 'primeng/rating';
-=======
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {GrowlModule} from 'primeng/growl';
@@ -25,7 +23,6 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import {EditorModule} from 'primeng/editor';
 import {DropdownModule} from 'primeng/dropdown';
->>>>>>> origin/HU-037
 
 // Servicios
 import { AuthService } from './_servicios/auth.service';
@@ -121,16 +118,13 @@ const appRoutes: Routes = [
     ),
     ChartsModule,
     TableModule,
-<<<<<<< HEAD
-    RatingModule
-=======
+    RatingModule,
     GrowlModule,
     ConfirmDialogModule,
     EditorModule,
     DropdownModule,
     MessagesModule,
     MessageModule
->>>>>>> origin/HU-037
   ],
   providers: [AuthService, ChatbotService, AdminService, ConfirmationService],
   bootstrap: [AppComponent]
