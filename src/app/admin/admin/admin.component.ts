@@ -22,20 +22,6 @@ export class AdminComponent implements OnInit {
   doughnutChartData2;
   doughnutChartType2;
   chargedData: boolean;
-  // ==============================================================================
-  // ==============================================================================
-  // Doughnut for first question
-  /*
-  public doughnutChartLabels2:string[] = ['Muy útil', 'Ligeramente útil', 'Útil',  'Poco útil', 'Nada útil'];
-  public doughnutChartData2:number[] = [350, 450, 320, 120, 100];
-  public doughnutChartType2:string = 'doughnut';
-  // events
-  public chartClicked2(e:any):void {
-    console.log(e);
-  }
-  public chartHovered2(e:any):void {
-    console.log(e);
-  }*/
   constructor(private admin: AdminService) {
     this.selectWindow = true;
     this.windowClose = true;
