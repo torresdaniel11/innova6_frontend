@@ -23,16 +23,19 @@
                   <a (click)="set(opcion)">{{opcion}}</a>
                 </li>
               </div>
-
               <div *ngIf="mensaje.preguntas">
-                <div>
-                  <button *ngIf="verFrecuentes" (click)="verFrecuentes = !verFrecuentes">Ver preguntas frecuentes</button>
+                <a *ngIf="!verFrecuentes" (click)="verFrecuentes = true">Ver preguntas frecuentes</a>
+                <div *ngIf="verFrecuentes">
+                  <div *ngIf="mensaje.preguntas.length == 0">
+                    Aún no hay preguntas frecuentes
+                  </div>
+                  <div *ngFor="let pregunta of mensaje.preguntas">
+                    <li>
+                      <a (click)="set(pregunta)">{{pregunta}}</a>
+                    </li>
+                  </div>
                 </div>
-                <div *ngIf="verFrecuentes" *ngFor="let preguntas of mensaje.preguntas">
-                  <li>
-                    <a (click)="set(preguntas)">{{preguntas}}</a>
-                  </li>
-                </div>
+
               </div>
 
               <div *ngIf="mensaje?.ratingYN">

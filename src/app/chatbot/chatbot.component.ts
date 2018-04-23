@@ -16,6 +16,7 @@ export class ChatbotComponent implements OnInit {
   currentPregunta;
   mensajes;
   input: string;
+  verFrecuentes=false;
 
   constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef) {
     this.estaAbierto = chatbot.abierto;
