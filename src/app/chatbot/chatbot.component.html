@@ -17,23 +17,43 @@
         <div class="conversacion" id="chat_body" #conversation>
           <div *ngFor="let mensaje of mensajes" [ngClass]="(mensaje.de=='chatbot')?'msj_chatbot':'msj_usuario'" >
             <div class="mensaje" >{{mensaje.mensaje}}
+
               <div *ngFor="let opcion of mensaje.opciones">
                 <li>
                   <a (click)="set(opcion)">{{opcion}}</a>
                 </li>
               </div>
-              <div *ngIf="mensaje?.ratingYN">
-                <!--  -->
+              <div *ngIf="mensaje.preguntas">
+                <a *ngIf="!verFrecuentes" (click)="verFrecuentes = true">Ver preguntas frecuentes</a>
+                <div *ngIf="verFrecuentes">
+                  <div *ngIf="mensaje.preguntas.length == 0">
+                    Aún no hay preguntas frecuentes
+                  </div>
+                  <div *ngFor="let pregunta of mensaje.preguntas">
+                    <li>
+                      <a (click)="set(pregunta)">{{pregunta}}</a>
+                    </li>
+                  </div>
+                </div>
+
               </div>
 
-              <div *ngIf="mensaje?.rating15">
-                <p-rating [(ngModel)]="val"></p-rating>
+              <div *ngIf="mensaje.tipo_poll == 'si-no' ">
+                <!--  -->
+                <div>
+                  <button class="poll-button" (click)="set('Si')">Si</button>
+                  <button class="poll-button" (click)="set('No')">No</button>
+                </div>
+              </div>
+
+              <div *ngIf="mensaje.tipo_poll == '1-5' ">
+                <p-rating [(ngModel)]="val" [cancel]="false" (onRate)="marcarCalificacion($event)" [disabled]="!ratingEnable"></p-rating>
               </div>
             </div>
           </div>
         </div>
         <div class="input_box">
-          <input id="user-chatbot-input" [(ngModel)]="input" (keyup)="onKey($event)" type="text" />
+          <input id="user-chatbot-input" [(ngModel)]="input" (keyup)="onKey($event)" type="text" [disabled]="!inputEnable" />
         </div>
         <div class="cta_box">
           <button id="chatbot-user-button" (click)="enviar()">Enviar</button>

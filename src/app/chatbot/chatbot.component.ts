@@ -16,8 +16,12 @@ export class ChatbotComponent implements OnInit {
   currentPregunta;
   mensajes;
   input: string;
-
+  verFrecuentes=false;
+  inputEnable:boolean;
+  ratingEnable:boolean;
   constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef) {
+    this.ratingEnable = true;
+    this.inputEnable = true;
     this.estaAbierto = chatbot.abierto;
     this.conversation_token = chatbot.conversation_token;
     this.input = "";
@@ -96,18 +100,23 @@ export class ChatbotComponent implements OnInit {
           } else if(result['question_load_question']){
             // PREGUNTAS FRECUENTES
             this.arrayPreguntasFrecuentes().then(methodResult => {
-              this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
+              this.pushMensajeConPreguntas('chatbot', pregunta, methodResult);
             }).catch(error => {
               console.log(error);
             });
           } else if(result['question_load_article']){
             //RECURSO
+            this.pushMensaje('chatbot', pregunta)
           } else if(result['question_evaluate_one']){
             //EVALUACION SI O NO
+            this.pushMensajeCalificacion('chatbot', pregunta, 'si-no')
           } else if(result['question_evaluate_two']){
             //EVALUACION RATING
+            this.pushMensajeCalificacion('chatbot', pregunta, '1-5')
           } else if(result['question_finish']){
             //FIN CONVERSACION
+            this.pushMensaje('chatbot', pregunta)
+            this.inputEnable = false;
           } else {
             //PREGUNTA SENCILLA
             this.pushMensaje('chatbot', pregunta)
@@ -215,6 +224,29 @@ export class ChatbotComponent implements OnInit {
       "opciones": opciones
     });
     this.scrollBottom();
+  }
+
+  pushMensajeConPreguntas(de: string, mensaje: string, preguntas) {
+    this.mensajes.push({
+      "de": de,
+      "mensaje": mensaje,
+      "preguntas": preguntas
+    });
+    this.scrollBottom();
+  }
+
+  pushMensajeCalificacion(de:string, mensaje:string, tipo_calificacion:string){
+    this.mensajes.push({
+      "de": de,
+      "mensaje": mensaje,
+      "tipo_poll": tipo_calificacion
+    });
+    this.scrollBottom();
+  }
+
+  marcarCalificacion(event){
+    this.set(event.value+"")
+    this.ratingEnable = false;
   }
 
   onKey(event) {
