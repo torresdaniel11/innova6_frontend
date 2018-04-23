@@ -1,0 +1,19 @@
+.style-form-group {
+  background-color: #eef1f3;
+  border: 1px solid #ccc;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  padding: 8px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.edit-articles-hr {
+  margin: 0 0 10px 0;
+}
+.btn-save-article {
+  text-align: right;
+  margin-bottom: 15px;
+}
+.btn-clear-content {
+  text-align: right;
+  margin: 10px 0 2px 0;
+}

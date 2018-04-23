@@ -1,0 +1,86 @@
+.chatbot-admin-container {
+  background-color: #2B8178;
+  border-radius: 8px;
+}
+.openBot {
+  width: 10%;
+}
+.openHeader{
+  color: #FFF;
+  margin-left: 15px;
+}
+.chatbot-message-admin {
+  background: white;
+  overflow: auto;
+  height: 350px;
+  padding: 15px;
+  margin-top: 10px;
+}
+.conversacion {
+
+}
+.msj_chatbot {
+  text-align: left;
+  padding: 2px 0;
+}
+.msj_chatbot .mensaje{
+  background: rgba(0,122,255,0.6);
+  border-radius: 5px;
+  padding: 0 5px;
+  color: white;
+  margin: 10px 5px;
+  display: inline-block;
+  max-width: 80%;
+}
+.msj_usuario {
+  text-align: right;
+  padding: 2px 0;
+}
+.msj_usuario .mensaje{
+  background: rgba(250,0,0,0.55);
+  color: white;
+  padding: 5px;
+  margin: 0 10px;
+  border-radius: 7px;
+  word-break: break-word;
+  display: inline-block;
+  text-align: left;
+  max-width: 80%;
+}
+/* Windows event styles */
+.close-window-admin {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.close-window-admin button:nth-child(1) {
+  color: #343a40;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,.125);
+}
+.close-window-admin button:nth-child(2) {
+  color: tomato;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,.125);
+}
+/* TABLE PRIMENG STYLE */
+.btn-export-container {
+  padding: 5px 15px;
+}
+.btn-export-tabla {
+  margin-right: 15px;
+  cursor: pointer;
+}
+.btn-export-selected {
+  cursor: pointer;
+}
+/* FILTER CONTAINER STYLES */
+.filter-table-container {
+  padding: 5px 15px;
+}
+
+/* TABLE STYLES */
+#Evaluation-chatbot-table .ui-table .ui-widget-header  {
+  background: transparent !important;
+  background: linear-gradient(to bottom, #f6f7f900 0%, #ebedf000 100%) !important;
+}

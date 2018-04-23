@@ -1,7 +1,7 @@
 .admin-container {
   background-color: #F8F9FA;
-  height: 100vh;
   position: relative;
+  height: 100%;
 }
 .bg-light {
   background-color: #2B8178!important;
@@ -12,7 +12,7 @@
   color: #FFFFFF;
 }
 .main-content {
-  margin-left: 200px;
+  margin-left: 270px;
   margin-top: 0;
   padding: 0;
 }
@@ -25,6 +25,7 @@
   padding: 15px 25px;
   position: relative;
   z-index: 1;
+  height: 100vh;
 }
 
 .person-tittle {
@@ -68,8 +69,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 200px;
+  height: 100%;
+  width: 270px;
   background-color: #2B8178;
   z-index: 0;
 }
@@ -86,7 +87,7 @@
   background-color: #ffffff;
   text-align: center;
   color: #2B8178;
-  margin-left: 35px;
+  margin-left: 74px;
   margin-bottom: 15px;
   overflow: hidden;
   padding: 0;
@@ -100,6 +101,9 @@
 }
 .left-side-menu ul li {
   cursor: pointer;
+}
+.left-side-menu ul li:hover, .left-side-menu ul li:focus  {
+  background-color: #217067 !important;
 }
 .left-side-menu {
   margin-top: 56px;
@@ -123,6 +127,7 @@
   border-bottom: 1px solid #155724;
   border-top: 1px solid #155724;
   color: #ffffff;
+  border-radius: 0;
 }
 /* General styles */
 .hr-wstyle {
@@ -136,3 +141,17 @@
   color: #ffffff;
   background-color: #2B8178;
 }
+
+.ui-dialog-mask {
+  position: relative !important;
+  width: 100%;
+  height: 100%;
+}
+.ui-widget-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+

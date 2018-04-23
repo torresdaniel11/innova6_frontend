@@ -1,0 +1,50 @@
+<div>
+  <p-growl [value]="msgs"></p-growl>
+  <div class="card">
+    <div class="card-body">
+      <h3>Gestor de artículos</h3>
+      <hr>
+      <div class="btn-create-article">
+        <button [routerLink]="'/admin/articles/$_idnew_articles'" style="cursor: pointer" ngClass="btn btn-sm btn-success">
+          <i class="fa fa-plus-square" aria-hidden="true"></i> Nuevo artículo
+        </button>
+      </div>
+      <p-table #dt [columns]="cols" [value]="articles" [paginator]="true" [rows]="10" [resizableColumns]="true" selectionMode="single" [(selection)]="selectedArticle" (onRowSelect)="onRowSelect($event)">
+        <ng-template pTemplate="caption">
+          <div style="text-align: right">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+          </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col *ngFor="let col of columns" [style.width]="col.width">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns"  [pSortableColumn]="col.field" pResizableColumn>
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns" class="ui-resizable-column">
+              <div class="text-aling-btn" style="text-align: center" *ngIf="col.header == 'Acción'">
+                <button [routerLink]="'/admin/articles/$_id' + rowData[col.field]" style="cursor: pointer" ngClass="btn btn-sm btn-primary">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                </button>
+                <button id="{{rowData[col.field]}}" (click)="confirm($event)" style="cursor: pointer" ngClass="btn btn-sm btn-danger btn-delete" disabled>
+                  Borrar <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+              </div>
+              <span *ngIf="col.header != 'Acción'">{{changeDateFormat(rowData[col.field], col.header )}}</span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
