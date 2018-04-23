@@ -17,6 +17,7 @@
         <div class="conversacion" id="chat_body" #conversation>
           <div *ngFor="let mensaje of mensajes" [ngClass]="(mensaje.de=='chatbot')?'msj_chatbot':'msj_usuario'" >
             <div class="mensaje" >{{mensaje.mensaje}}
+
               <div *ngFor="let opcion of mensaje.opciones">
                 <li>
                   <a (click)="set(opcion)">{{opcion}}</a>
@@ -36,8 +37,6 @@
                 </div>
 
               </div>
-
-
 
               <div *ngIf="mensaje?.ratingYN">
                 <!--  -->
