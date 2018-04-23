@@ -1,3 +1,5 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/51aaf2b40ceb472bb7c912279bf4134c)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=torresdaniel11/innova6_frontend&amp;utm_campaign=Badge_Grade)
+
 # MISO 4101 - Procesos de Desarrollo Agiles
 
 ## Proyecto GTI - Conecta-TE - Grupo 6 (Innova6)
