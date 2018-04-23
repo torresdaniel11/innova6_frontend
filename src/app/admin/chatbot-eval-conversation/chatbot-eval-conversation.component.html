@@ -1,0 +1,93 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h3>Chatbot </h3>
+          <hr>
+          <div class="card chatbot-admin-container">
+            <div class="card-body">
+              <div class="row">
+                <div  class="col-12">
+                  <div  class="header">
+                    <div  style="float:left">
+                      <img  class="openBot" src="assets/images/ro_bot.png">
+                      <span  class="openHeader">Chatbot grupo de tecnología Contecta-TE</span>
+                    </div>
+                  </div>
+                </div>
+                <div  class="col-12">
+                  <div  class="body chatbot-message-admin">
+                    <div  class="conversacion" id="chat_body" *ngFor="let conversation of conversations">
+                      <div  class="msj_chatbot">
+                        <div  class="mensaje">{{ conversation.question_record_question.question_description}}</div>
+                      </div>
+                      <div  class="msj_usuario">
+                        <div  class="mensaje">{{ conversation.question_record_response}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body" >
+          <h3>Tabla de las consultas</h3>
+          <hr>
+          <div class="table-chatbot-conversation">
+            <p-table id="Evaluation-chatbot-table" #dt [columns]="cols" [value]="conversations" selectionMode="multiple" [(selection)]="selectedConversations" [paginator]="true" [rows]="10" [resizableColumns]="true">
+              <ng-template pTemplate="caption">
+                <div class="ui-helper-clearfix">
+                  <div class="row">
+                    <div class="col-md-12 btn-export-container">
+                      <button ngClass="btn btn-sm btn-primary btn-export-tabla" type="button" (click)="dt.exportCSV()" style="float:left">
+                        <i class="fa fa-download" aria-hidden="true"></i> Exportar tabla
+                      </button>
+                      <button ngClass="btn btn-sm btn-primary btn-export-selected" type="button" (click)="dt.exportCSV({selectionOnly:true})" style="float:left">
+                        <i class="fa fa-hand-pointer-o" aria-hidden="true"></i> Exportar campos seleccionados
+                      </button>
+                    </div>
+                    <hr>
+                    <div class="col-md-12 filter-table-container">
+                      <div style="text-align: right">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                  <col *ngFor="let col of columns" [style.width]="col.width">
+                </colgroup>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                  <td *ngFor="let col of columns" class="ui-resizable-column">
+                    <span *ngIf="col.header == 'Pregunta'">{{rowData[col.field]}}</span>
+                    <span *ngIf="col.header != 'Pregunta'">{{rowData[col.field]}}</span>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

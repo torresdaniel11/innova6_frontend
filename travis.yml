@@ -6,8 +6,7 @@ node_js:
 
 branches:
   only:
-    - master
-    - develop
+    - development
 
 before_script:
   - npm install -g firebase-tools
@@ -20,5 +19,6 @@ after_success:
   - firebase deploy --token $FIREBASE_TOKEN
 
 notifications:
-  slack: miso4101-201810:bJrm7s7ZGokRPey3Du6KzDw2
-  email: d.torres11@uniandes.edu.co
+  email:
+    on_failure: d.torres11@uniandes.edu.co
+    on_success: d.torres11@uniandes.edu.co

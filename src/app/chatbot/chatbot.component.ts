@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ChatbotService } from '../_servicios/chatbot.service'
+import { ChatbotService } from '../_servicios/chatbot.service';
+import {RatingModule} from 'primeng/rating';
 declare var $: any;
 
 @Component({
@@ -15,8 +16,12 @@ export class ChatbotComponent implements OnInit {
   currentPregunta;
   mensajes;
   input: string;
-
+  verFrecuentes=false;
+  inputEnable:boolean;
+  ratingEnable:boolean;
   constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef) {
+    this.ratingEnable = true;
+    this.inputEnable = true;
     this.estaAbierto = chatbot.abierto;
     this.conversation_token = chatbot.conversation_token;
     this.input = "";
@@ -79,15 +84,41 @@ export class ChatbotComponent implements OnInit {
       this.chatbot.consultarPreguntaARealizar(this.conversation_token).subscribe(
         result => {
           this.currentPregunta = result;
+          console.log(result)
           var pregunta = this.currentConversacion.conversation_name == "" ? result['question_description'] : this.currentConversacion.conversation_name + ", " + result['question_description'];
           if (result['question_replace']) {
-            console.log("la magica");
-            this.arrayOpciones().then(methodResult => {
+            // CATEGORIAS
+            this.arrayCategorias().then(methodResult => {
               this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
             }).catch(error => {
               console.log(error);
-            })
+            });
+          } else if(result['question_platform']){
+            //PLATAFORMA
+            let plataformas = ["Moodle", "Sicua"]
+            this.pushMensajeConOpciones('chatbot', pregunta, plataformas);
+          } else if(result['question_load_question']){
+            // PREGUNTAS FRECUENTES
+            this.arrayPreguntasFrecuentes().then(methodResult => {
+              this.pushMensajeConPreguntas('chatbot', pregunta, methodResult);
+            }).catch(error => {
+              console.log(error);
+            });
+          } else if(result['question_load_article']){
+            //RECURSO
+            this.pushMensaje('chatbot', pregunta)
+          } else if(result['question_evaluate_one']){
+            //EVALUACION SI O NO
+            this.pushMensajeCalificacion('chatbot', pregunta, 'si-no')
+          } else if(result['question_evaluate_two']){
+            //EVALUACION RATING
+            this.pushMensajeCalificacion('chatbot', pregunta, '1-5')
+          } else if(result['question_finish']){
+            //FIN CONVERSACION
+            this.pushMensaje('chatbot', pregunta)
+            this.inputEnable = false;
           } else {
+            //PREGUNTA SENCILLA
             this.pushMensaje('chatbot', pregunta)
           }
         }, error => {
@@ -143,7 +174,7 @@ export class ChatbotComponent implements OnInit {
     })
   }
 
-  arrayOpciones() {
+  arrayCategorias() {
     return new Promise((resolve, reject) => {
       var result_array = [];
       this.chatbot.getCategorias().subscribe(result => {
@@ -151,6 +182,25 @@ export class ChatbotComponent implements OnInit {
           let cat = result[i].category_name;
           result_array.push(cat);
         }
+        console.log(result_array)
+
+        resolve(result_array);
+      }, error => {
+        console.log(<any>error);
+        reject(error.error);
+      })
+    })
+  }
+
+  arrayPreguntasFrecuentes(){
+    return new Promise((resolve, reject) => {
+      var result_array = [];
+      this.chatbot.getPreguntasFrecuentes(this.conversation_token).subscribe(result => {
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let pf = result[i].frequent_questions_name;
+          result_array.push(pf);
+        }
+        console.log(result_array)
         resolve(result_array);
       }, error => {
         console.log(<any>error);
@@ -173,8 +223,30 @@ export class ChatbotComponent implements OnInit {
       "mensaje": mensaje,
       "opciones": opciones
     });
-    console.log(this.mensajes);
     this.scrollBottom();
+  }
+
+  pushMensajeConPreguntas(de: string, mensaje: string, preguntas) {
+    this.mensajes.push({
+      "de": de,
+      "mensaje": mensaje,
+      "preguntas": preguntas
+    });
+    this.scrollBottom();
+  }
+
+  pushMensajeCalificacion(de:string, mensaje:string, tipo_calificacion:string){
+    this.mensajes.push({
+      "de": de,
+      "mensaje": mensaje,
+      "tipo_poll": tipo_calificacion
+    });
+    this.scrollBottom();
+  }
+
+  marcarCalificacion(event){
+    this.set(event.value+"")
+    this.ratingEnable = false;
   }
 
   onKey(event) {
