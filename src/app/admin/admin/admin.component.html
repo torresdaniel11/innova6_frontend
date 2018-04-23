@@ -16,12 +16,11 @@
                 <div class="card-body">
                   <h5>¿El chatbot le fué fácil de usar?</h5>
                   <div style="display: block">
-                    <canvas baseChart
-                            [data]="doughnutChartData1"
-                            [labels]="doughnutChartLabels1"
-                            [chartType]="doughnutChartType1"
-                            (chartHover)="chartHovered1($event)"
-                            (chartClick)="chartClicked1($event)"></canvas>
+                    <canvas *ngIf="chargedData" baseChart
+                      [data]="doughnutChartData1"
+                      [labels]="doughnutChartLabels1"
+                      [chartType]="doughnutChartType1">
+                    </canvas>
                   </div>
                 </div>
               </div>
@@ -31,12 +30,10 @@
                 <div class="card-body">
                   <h5>¿Le fué útil las respuestas entregadas?</h5>
                   <div style="display: block">
-                    <canvas baseChart
+                    <canvas *ngIf="chargedData" baseChart
                             [data]="doughnutChartData2"
                             [labels]="doughnutChartLabels2"
-                            [chartType]="doughnutChartType2"
-                            (chartHover)="chartHovered2($event)"
-                            (chartClick)="chartClicked2($event)"></canvas>
+                            [chartType]="doughnutChartType2"></canvas>
                   </div>
                 </div>
               </div>
