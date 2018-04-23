@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { YoutubePlayerModule } from 'ng2-youtube-player';
+import { YoutubePlayerModule } from 'ngx-youtube-player';
 
 import { NgModule } from '@angular/core';
 import {  RouterModule, Routes } from '@angular/router';
