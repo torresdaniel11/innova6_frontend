@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-declare var $:any;
+import {AdminService} from '../../_servicios/admin.service';
+declare var $: any;
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -8,36 +10,29 @@ declare var $:any;
 export class AdminComponent implements OnInit {
   selectWindow: boolean;
   windowClose: boolean;
-  // ==============================================================================
-  // ==============================================================================
-  // Doughnut for first question
-  public doughnutChartLabels1:string[] = ['Si', 'No' ];
-  public doughnutChartData1:number[] = [350, 450];
-  public doughnutChartType1:string = 'doughnut';
-  // events
-  public chartClicked1(e:any):void {
-    console.log(e);
-  }
-  public chartHovered1(e:any):void {
-    console.log(e);
-  }
-  // ==============================================================================
-  // ==============================================================================
-  // Doughnut for first question
-  public doughnutChartLabels2:string[] = ['Muy útil', 'Ligeramente útil', 'Útil',  'Poco útil', 'Nada útil'];
-  public doughnutChartData2:number[] = [350, 450, 320, 120, 100];
-  public doughnutChartType2:string = 'doughnut';
-  // events
-  public chartClicked2(e:any):void {
-    console.log(e);
-  }
-  public chartHovered2(e:any):void {
-    console.log(e);
-  }
-
-  constructor() {
+  conversations;
+  // =====================================================
+  // Variables del pie si - no
+  doughnutChartLabels1;
+  doughnutChartData1;
+  doughnutChartType1;
+  // =====================================================
+  // variables del pie util 1 - 5
+  doughnutChartLabels2;
+  doughnutChartData2;
+  doughnutChartType2;
+  chargedData: boolean;
+  constructor(private admin: AdminService) {
     this.selectWindow = true;
     this.windowClose = true;
+    this.conversations = [];
+    this.doughnutChartData1 = [0,0];
+    this.doughnutChartLabels1 = [];
+    this.doughnutChartType1 = '';
+    this.doughnutChartData2 = [0, 0, 0, 0, 0];
+    this.doughnutChartLabels2 = [];
+    this.doughnutChartType2 = '';
+    this.chargedData = false;
   }
   // ==============================================================================
   // ==============================================================================
@@ -48,7 +43,49 @@ export class AdminComponent implements OnInit {
   public closeWindow() {
     this.windowClose = !this.windowClose;
   }
+  ngOnInit() {
+    // ===================================================================================================
+    // ===================================================================================================
+    // Consume los servicios de conversation para mostrar en la tabla
+    let question1_count2 = 0
+    this.admin.conversations().subscribe(
+      result => {
+        if (result !== undefined) {
+          this.conversations = result;
+          for ( let con = 0; con < Object.keys(this.conversations).length; con++ ) {
+            this.admin.recuperarConversacion(this.conversations[con].conversation_token).subscribe(
+              data => {
+                if (data !== undefined) {
+                  for ( let qs = 0; qs < Object.keys(data).length; qs++ ) {
+                    if( data[qs].question_record_conversation.conversation_conversation_level.conversation_level_name === "Finalización") {
+                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === "Pregunta 1") {
+                        let position = data[qs].question_record_response === "si" ? 0 : 1;
+                          this.doughnutChartData1[position]++;
+                      } else {
+                        let position = parseInt(data[qs].question_record_response);
+                        this.doughnutChartData2[(position-1)]++;
+                      }
+                    }
+                  }
+                }
+                if( con === ( Object.keys(data).length - 1)) {
+                  this.chargedData = true;
+                  this.doughnutChartLabels1 = ['Si', 'No' ];
+                  this.doughnutChartType1   = 'doughnut';
+                  this.doughnutChartLabels2 = ['Muy útil', 'Ligeramente útil', 'Útil',  'Poco útil', 'Nada útil'];
+                  this.doughnutChartType2   = 'doughnut';
+                }
+              }
+            )
+          }
 
-  ngOnInit() {}
+        }else {}
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );
+
+  }
 
 }
