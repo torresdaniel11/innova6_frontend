@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { YoutubePlayerModule } from 'ng2-youtube-player';
+
 import { NgModule } from '@angular/core';
 import {  RouterModule, Routes } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -53,6 +56,7 @@ import { ChatbotQuestionComponent } from './admin/chatbot-question/chatbot-quest
 import { ChatbotEvalComponent } from './admin/chatbot-eval/chatbot-eval.component';
 import { ChatbotEvalConversationComponent } from './admin/chatbot-eval-conversation/chatbot-eval-conversation.component';
 import { ArticlesComponent } from './admin/articles/articles.component';
+import { RecursoExternoComponent } from './recurso-externo/recurso-externo.component';
 
 
 const appRoutes: Routes = [
@@ -67,6 +71,7 @@ const appRoutes: Routes = [
       { path: 'catalogo', component: CatalogoComponent },
       { path: 'contectenos', component: ContectenosComponent },
       { path: 'article/:id', component: ArticleViewComponent },
+      { path: 'recurso', component: RecursoExternoComponent }
     ],
   },
   { path: 'login', component: LoginComponent },
@@ -104,7 +109,8 @@ const appRoutes: Routes = [
     ChatbotEvalConversationComponent,
     ArticlesComponent,
     ArticlesEditComponent,
-    ArticleViewComponent
+    ArticleViewComponent,
+    RecursoExternoComponent
   ],
   imports: [
     BrowserModule,
@@ -124,7 +130,8 @@ const appRoutes: Routes = [
     EditorModule,
     DropdownModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    YoutubePlayerModule
   ],
   providers: [AuthService, ChatbotService, AdminService, ConfirmationService],
   bootstrap: [AppComponent]
