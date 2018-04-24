@@ -34,6 +34,12 @@ export class AdminService {
     return this.http.get(uri);
     // end http get
   }
+  articlesType() {
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    let uri = hackurl + 'https://innova6.herokuapp.com/type_articles/';
+    return this.http.get(uri);
+    // end http get
+  }
   newArticles(json) {
     let param = JSON.stringify(json);
     let hackurl = 'https://cors-anywhere.herokuapp.com/';

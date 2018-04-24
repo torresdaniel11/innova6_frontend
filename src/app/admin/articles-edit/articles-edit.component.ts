@@ -11,17 +11,29 @@ declare var $: any;
 export class ArticlesEditComponent implements OnInit {
   msgs;
   selectedCategories;
+  selectedTypeArticles;
   categories;
+  list_type_article;
   articles;
   article_content: string;
   article_tittle: string;
   article_category: string;
   new_data;
+  article_url;
+  type_article;
+  changeTypeArticle(event) {
+    this.type_article = event.value.type_article_name;
+    console.log(event);
+  }
   constructor(private admin: AdminService, private router: Router ) {
-    this.new_data = [];
+    this.new_data = {};
     this.articles = [];
     this.categories = [];
     this.selectedCategories = this.categories;
+    this.list_type_article = [];
+    this.selectedTypeArticles = this.list_type_article;
+    this.article_url = '';
+    this.type_article = '';
   }
   // ===================================================================================================
   // ===================================================================================================
@@ -31,25 +43,44 @@ export class ArticlesEditComponent implements OnInit {
     const split_url = url.split('$_id');
     let crud_ctr = 1;
     let art_id_category;
+    let art_name_category;
+    let id_type_art;
     for (let ca = 0; ca < Object.keys(this.categories).length; ca++) {
       if ( this.categories[ca].category_name === $('#category-id').html() ) {
         art_id_category = this.categories[ca].id;
+        art_name_category = this.categories[ca].category_name;
       }
     }
+    for (let tp = 0; tp < Object.keys(this.list_type_article).length; tp++) {
+      console.log(this.list_type_article[tp].type_article_name,  $('#article-type-id').text());
+      if ( this.list_type_article[tp].type_article_name ===  $('#article-type-id').text() ) {
+        id_type_art = this.list_type_article[tp].id;
+      }
+    }
+    const text_container = $('#article-content');
     this.new_data = {
       'id': split_url[1],
-      'article_tittle': $('#articleTittle').val(),
-      'article_content': $('#article-content').text(),
-      'article_slug': $('#articleTittle').val(),
-      'question_category': art_id_category
+      'article_tittle': $('#articleTittle').val() !== undefined ? $('#articleTittle').val() : 'algo',
+      'article_content': text_container.text() !== undefined && text_container.text() !== '' ? text_container.text() : 'algo',
+      'article_slug': $('#articleTittle').val() !== undefined ? $('#articleTittle').val() : 'algo',
+      'question_category': {
+        'id': art_id_category,
+        'category_name': art_name_category !== undefined ? art_name_category : 'algo'
+      },
+      'article_url': $('#articleLink').val() !== undefined ? $('#articleLink').val() : 'algo',
+      'article_type_article': {
+        'id': id_type_art,
+        'type_article_name': $('#article-type-id').text() !== undefined ? $('#article-type-id').text() : 'algo'
+      }
     };
     const  array_data = Object.values(this.new_data);
+    /*
     for ( let a = 1; a < array_data.length; a++) {
       if ( array_data[a] === '' || array_data[a] === 'empty' || array_data[a] === 'new_articles' || array_data[a] === undefined ) {
         crud_ctr = 0;
       }
-    }
-    console.log(array_data, crud_ctr);
+    }*/
+    console.log(this.new_data, crud_ctr);
     if ( crud_ctr !== 0 ) {
       if (split_url[1] !== 'new_articles') {
         this.admin.editArticles(split_url[1], this.new_data).subscribe(
@@ -80,6 +111,13 @@ export class ArticlesEditComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.admin.articlesType().subscribe(
+      artType => {
+        if ( artType !== undefined ) {
+          this.list_type_article = artType;
+        } else {}
+      }
+    );
     this.admin.categories().subscribe(
       result => {
         if (result !== undefined) {
@@ -95,6 +133,7 @@ export class ArticlesEditComponent implements OnInit {
       data => {
         if ( data !== undefined) {
           this.articles = data;
+          console.log(this.articles);
           const url = window.location.href;
           const split_url = url.split('$_id');
           this.admin.categories().subscribe(
@@ -105,9 +144,11 @@ export class ArticlesEditComponent implements OnInit {
                   if (this.articles[i].id == split_url[1]) {
                     this.article_content = this.articles[i].article_content;
                     this.article_tittle = this.articles[i].article_tittle;
+                    this.article_url = this.articles[i].article_url;
+                    this.type_article = this.articles[i].article_type_article.type_article_name;
                   }
                   for (let c = 0; c < Object.keys(this.categories).length; c++) {
-                    if (this.articles[i].question_category === this.categories[c].id && split_url[1] !== 'new_articles' ) {
+                    if (this.articles[i].question_category.id === this.categories[c].id && split_url[1] !== 'new_articles' ) {
                       this.article_category = this.categories[c].category_name;
                     }
                   }

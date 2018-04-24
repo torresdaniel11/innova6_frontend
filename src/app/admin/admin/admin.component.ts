@@ -47,7 +47,7 @@ export class AdminComponent implements OnInit {
     // ===================================================================================================
     // ===================================================================================================
     // Consume los servicios de conversation para mostrar en la tabla
-    let question1_count2 = 0
+    let question1_count2 = 0;
     this.admin.conversations().subscribe(
       result => {
         if (result !== undefined) {
@@ -57,26 +57,26 @@ export class AdminComponent implements OnInit {
               data => {
                 if (data !== undefined) {
                   for ( let qs = 0; qs < Object.keys(data).length; qs++ ) {
-                    if( data[qs].question_record_conversation.conversation_conversation_level.conversation_level_name === "Finalización") {
-                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === "Pregunta 1") {
+                    if ( data[qs].question_record_conversation.conversation_conversation_level.conversation_level_name === 'Finalización') {
+                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 1') {
                         let position = data[qs].question_record_response === "si" ? 0 : 1;
-                          this.doughnutChartData1[position]++;
+                        this.doughnutChartData1[position]++;
                       } else {
                         let position = parseInt(data[qs].question_record_response);
-                        this.doughnutChartData2[(position-1)]++;
+                        this.doughnutChartData2[( position - 1 )]++;
                       }
                     }
                   }
                 }
-                if( con === ( Object.keys(data).length - 1)) {
+                if ( con === ( Object.keys(result).length - 1)) {
                   this.chargedData = true;
-                  this.doughnutChartLabels1 = ['Si', 'No' ];
+                  this.doughnutChartLabels1 = ['No', 'Si' ];
                   this.doughnutChartType1   = 'doughnut';
-                  this.doughnutChartLabels2 = ['Muy útil', 'Ligeramente útil', 'Útil',  'Poco útil', 'Nada útil'];
+                  this.doughnutChartLabels2 = ['Nada útil', 'Poco útil', 'Útil', 'Ligeramente útil', 'Muy útil'];
                   this.doughnutChartType2   = 'doughnut';
                 }
               }
-            )
+            );
           }
 
         }else {}

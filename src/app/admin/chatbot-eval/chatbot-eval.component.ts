@@ -53,17 +53,8 @@ export class ChatbotEvalComponent implements OnInit {
         hour  = date.getHours() + 5,
         min   = date.getMinutes();
       let newDateFormat = '';
-      switch (date_type) {
-        case 'Fecha':
-          newDateFormat = year + '/' + setZero(month) + '/' + setZero(dt) + '-' + setHour(hour) + ':' + setZero(min);
-          break;
-        case 'Consultas':
-          newDateFormat = '';
-          break;
-        case 'hour':
-          console.log();
-        default:
-          newDateFormat = date_format;
+      if ( date_type === 'Fecha' ) {
+        newDateFormat = year + '/' + setZero(month) + '/' + setZero(dt) + '-' + setHour(hour) + ':' + setZero(min);
       }
       return newDateFormat;
     };
@@ -82,20 +73,27 @@ export class ChatbotEvalComponent implements OnInit {
               data => {
                 if (data !== undefined) {
                   for ( let qs = 0; qs < Object.keys(data).length; qs++ ) {
+                    // ==================================================================================================
+                    // ==================================================================================================
+                    // Coversion del formato de la fecha
                     let start_conversation = +new Date(data[qs].question_record_conversation.conversation_create_date);
                     let end_conversation = +new Date(data[qs].question_record_conversation.conversation_update_date);
                     let conversation_operation = end_conversation - start_conversation;
                     if (conversation_operation > 60e3) {
                       this.conversations[con].conversation_duration = Math.floor(conversation_operation / 60e3);
-                    }
-                    else {
+                    } else {
                       this.conversations[con].conversation_duration = Math.floor(conversation_operation / 1e3);
                     }
-                    this.conversations[con].conversation_date = this.changeDateFormat( data[qs].question_record_conversation.conversation_create_date , "Fecha" );
-                    if( data[qs].question_record_conversation.conversation_conversation_level.conversation_level_name === "Finalización") {
-                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === "Pregunta 1") {
+                    let date = data[qs].question_record_conversation.conversation_create_date;
+                    this.conversations[con].conversation_date = this.changeDateFormat(  date, 'Fecha' );
+                    // ==================================================================================================
+                    // ==================================================================================================
+                    // Asignacion de las respuestas a las preguntas de ealuacion
+                    if ( data[qs].question_record_conversation.conversation_conversation_level.conversation_level_name === 'Finalización') {
+                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 1') {
                         this.conversations[con].eval_chatbot_response1 = data[qs].question_record_response;
-                      } else {
+                      }
+                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 2') {
                         this.conversations[con].eval_chatbot_response2 = data[qs].question_record_response;
                       }
                     }
