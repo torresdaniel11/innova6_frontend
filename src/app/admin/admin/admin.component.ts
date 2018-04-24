@@ -47,7 +47,6 @@ export class AdminComponent implements OnInit {
     // ===================================================================================================
     // ===================================================================================================
     // Consume los servicios de conversation para mostrar en la tabla
-    let question1_count2 = 0;
     this.admin.conversations().subscribe(
       result => {
         if (result !== undefined) {
@@ -59,11 +58,21 @@ export class AdminComponent implements OnInit {
                   for ( let qs = 0; qs < Object.keys(data).length; qs++ ) {
                     if ( data[qs].question_record_conversation.conversation_conversation_level.conversation_level_name === 'Finalización') {
                       if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 1') {
-                        let position = data[qs].question_record_response === "si" ? 0 : 1;
-                        this.doughnutChartData1[position]++;
-                      } else {
-                        let position = parseInt(data[qs].question_record_response);
-                        this.doughnutChartData2[( position - 1 )]++;
+                        if (data[qs].question_record_response === 'Si' || data[qs].question_record_response === 'si') {
+                          let position1 = 0;
+                          this.doughnutChartData1[position1]++;
+                        }
+                        if (data[qs].question_record_response === 'no!' || data[qs].question_record_response === 'no') {
+                          let position1 = 1;
+                          this.doughnutChartData1[position1]++;
+                        }
+                      }
+                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 2') {
+                        let response_value = parseInt(data[qs].question_record_response, 10);
+                        if (response_value < 6) {
+                          let position2 = response_value;
+                          this.doughnutChartData2[( position2 - 1 )]++;
+                        }
                       }
                     }
                   }
