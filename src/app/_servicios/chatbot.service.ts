@@ -65,5 +65,10 @@ export class ChatbotService {
     return this.http.get(uri);
   }
 
+  getConfiguracionesChatbot() {
+    let uri = this.hackurl + 'https://innova6.herokuapp.com/configs';
+    return this.http.get(uri);
+  }
+
 
 }
