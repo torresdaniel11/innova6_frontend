@@ -54,13 +54,14 @@ export class ChatbotComponent implements OnInit {
   timeout;
   restartTimeout() {
     clearTimeout(this.timeout);
+    if(this.configuraciones == undefined) return;
     let timeoutMilliseconds = parseInt(this.configuraciones.timeout);
     this.timeout = setTimeout(() => { this.finalizaChatbotTimeout() }, timeoutMilliseconds);
   }
 
   finalizaChatbotTimeout(){
+    this.pushMensaje('chatbot', "Se final chatbot por inactividad");
     this.cerrarChat();
-    this.pushMensaje('chatbot', "Se final chatbot por inactividad")
     this.inputEnable = false;
   }
 
