@@ -4,6 +4,7 @@ import { RatingModule } from 'primeng/rating';
 import { Router } from '@angular/router'
 declare var $: any;
 
+
 @Component({
   selector: 'app-chatbot',
   templateUrl: './chatbot.component.html',
@@ -30,6 +31,8 @@ export class ChatbotComponent implements OnInit {
     this.ref.markForCheck();
   }
 
+  configuraciones;
+
   ngOnInit() {
     this.chatbot.estadoChat.subscribe(estado => {
       this.estaAbierto = estado;
@@ -41,8 +44,29 @@ export class ChatbotComponent implements OnInit {
       // HAY UNA CONVERSACION VAMOS A VER SI EXISTE EN EL BACK
       this.recuperarConversacion();
     }
-    this.printCategorias();
+    this.chatbot.getConfiguracionesChatbot().subscribe(result => {
+      this.configuraciones = result[0];
+      this.restartTimeout();
+    })
+    // this.printCategorias();
   }
+
+  timeout;
+  restartTimeout() {
+    console.log("restart");
+    clearTimeout(this.timeout);
+    let timeoutMilliseconds = parseInt(this.configuraciones.timeout);
+    console.log(timeoutMilliseconds);
+    this.timeout = setTimeout(() => { this.finalizaChatbotTimeout() }, timeoutMilliseconds);
+  }
+
+  finalizaChatbotTimeout(){
+    console.log("finaliza");
+    this.cerrarChat();
+  }
+
+
+
 
   crearConversacion() {
     this.chatbot.crearConversacion().subscribe(result => {
@@ -79,6 +103,7 @@ export class ChatbotComponent implements OnInit {
     if (this.conversation_token == null || this.conversation_token == undefined) {
       console.log("pere tantico")
     } else {
+      this.restartTimeout();
       this.chatbot.consultarPreguntaARealizar(this.conversation_token).subscribe(
         result => {
           this.currentPregunta = result;
@@ -159,21 +184,21 @@ export class ChatbotComponent implements OnInit {
     });
   }
 
-  printCategorias() {
-    return new Promise((resolve, reject) => {
-      var result_string: string = "";
-      this.chatbot.getCategorias().subscribe(result => {
-        for (var i = 0; i < Object.keys(result).length; i++) {
-          let cat = result[i].category_name;
-          result_string += "<span class='hola'>" + cat + "</span>";
-        }
-        resolve(result_string);
-      }, error => {
-        console.log(<any>error);
-        reject(error.error);
-      })
-    })
-  }
+  // printCategorias() {
+  //   return new Promise((resolve, reject) => {
+  //     var result_string: string = "";
+  //     this.chatbot.getCategorias().subscribe(result => {
+  //       for (var i = 0; i < Object.keys(result).length; i++) {
+  //         let cat = result[i].category_name;
+  //         result_string += "<span class='hola'>" + cat + "</span>";
+  //       }
+  //       resolve(result_string);
+  //     }, error => {
+  //       console.log(<any>error);
+  //       reject(error.error);
+  //     })
+  //   })
+  // }
 
   arrayCategorias() {
     return new Promise((resolve, reject) => {
