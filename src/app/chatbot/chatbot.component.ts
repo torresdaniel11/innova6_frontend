@@ -96,6 +96,12 @@ export class ChatbotComponent implements OnInit {
     );
   }
 
+  reiniciarChatbot(){
+    this.mensajes = [];
+    sessionStorage.removeItem("conversation_token");
+    this.crearConversacion();
+  }
+
   siguientePregunta() {
     if (this.conversation_token == null || this.conversation_token == undefined) {
       console.log("pere tantico")
