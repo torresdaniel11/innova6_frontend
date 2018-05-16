@@ -193,23 +193,7 @@ export class ChatbotComponent implements OnInit {
       this.siguientePregunta();
     });
   }
-
-  // printCategorias() {
-  //   return new Promise((resolve, reject) => {
-  //     var result_string: string = "";
-  //     this.chatbot.getCategorias().subscribe(result => {
-  //       for (var i = 0; i < Object.keys(result).length; i++) {
-  //         let cat = result[i].category_name;
-  //         result_string += "<span class='hola'>" + cat + "</span>";
-  //       }
-  //       resolve(result_string);
-  //     }, error => {
-  //       console.log(<any>error);
-  //       reject(error.error);
-  //     })
-  //   })
-  // }
-
+  
   arrayCategorias() {
     return new Promise((resolve, reject) => {
       var result_array = [];
