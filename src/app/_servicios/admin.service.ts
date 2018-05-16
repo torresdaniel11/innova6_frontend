@@ -59,4 +59,17 @@ export class AdminService {
     let uri = hackurl + 'https://innova6.herokuapp.com/articles/' + id + '/';
     return this.http.delete(uri);
   }
+  addChabotTimeDelay(json) {
+    let param = JSON.stringify(json);
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    let uri = hackurl + 'https://innova6.herokuapp.com/configs/1/';
+    let headers = new HttpHeaders().set('Content-Type', 'Application/json');
+    return this.http.put(uri, param, { headers: headers, responseType: 'json' });
+  }
+  getChabotTimeDelay() {
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    let uri = hackurl + 'https://innova6.herokuapp.com/configs/';
+    return this.http.get(uri);
+    // end http get
+  }
 }
