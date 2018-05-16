@@ -113,6 +113,13 @@ export class ChatbotComponent implements OnInit {
               console.log(error);
             });
           } else if (result['question_platform']) {
+            //TIPO DE USUARIO
+            this.arrayTiposDeUsuario().then(methodResult => {
+              this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
+            }).catch(error => {
+              console.log(error);
+            });
+          } else if (result['question_platform']) {
             //PLATAFORMA
             let plataformas = ["Moodle", "Sicua"]
             this.pushMensajeConOpciones('chatbot', pregunta, plataformas);
@@ -220,6 +227,22 @@ export class ChatbotComponent implements OnInit {
         for (var i = 0; i < Object.keys(result).length; i++) {
           let pf = result[i].frequent_questions_name;
           result_array.push(pf);
+        }
+        resolve(result_array);
+      }, error => {
+        console.log(<any>error);
+        reject(error.error);
+      })
+    })
+  }
+
+  arrayTiposDeUsuario() {
+    return new Promise((resolve, reject) => {
+      var result_array = [];
+      this.chatbot.getTiposDeUsuario().subscribe(result => {
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let tipoDeUsuario = result[i].type_user_name;
+          result_array.push(tipoDeUsuario);
         }
         resolve(result_array);
       }, error => {

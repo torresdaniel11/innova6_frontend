@@ -70,5 +70,10 @@ export class ChatbotService {
     return this.http.get(uri);
   }
 
+  getTiposDeUsuario(){
+    let uri = this.hackurl + 'https://innova6.herokuapp.com/type_users/';
+    return this.http.get(uri);
+  }
+
 
 }
