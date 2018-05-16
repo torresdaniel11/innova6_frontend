@@ -118,7 +118,7 @@ export class ChatbotComponent implements OnInit {
             }).catch(error => {
               console.log(error);
             });
-          } else if (result['question_platform']) {
+          } else if (result['question_type_user']) {
             //TIPO DE USUARIO
             this.arrayTiposDeUsuario().then(methodResult => {
               this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
