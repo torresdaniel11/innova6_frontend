@@ -22,6 +22,12 @@ export class AdminComponent implements OnInit {
   doughnutChartData2;
   doughnutChartType2;
   chargedData: boolean;
+  // =====================================================
+  // variables del delay del chatbot
+  disabledEdit: boolean;
+  disabledSave: boolean;
+  saveChatbotDelay;
+  hideDelayAlert: boolean;
   constructor(private admin: AdminService) {
     this.selectWindow = true;
     this.windowClose = true;
@@ -33,6 +39,10 @@ export class AdminComponent implements OnInit {
     this.doughnutChartLabels2 = [];
     this.doughnutChartType2 = '';
     this.chargedData = false;
+    this.disabledEdit = false;
+    this.disabledSave = true;
+    this.saveChatbotDelay = '';
+    this.hideDelayAlert = false;
   }
   // ==============================================================================
   // ==============================================================================
@@ -42,6 +52,13 @@ export class AdminComponent implements OnInit {
   }
   public closeWindow() {
     this.windowClose = !this.windowClose;
+  }
+  public editChatbotDelay() {
+    this.disabledEdit = true;
+    this.disabledSave = false;
+  }
+  public closeDelayAlert() {
+    this.hideDelayAlert = false;
   }
   ngOnInit() {
     // ===================================================================================================
@@ -56,30 +73,30 @@ export class AdminComponent implements OnInit {
               data => {
                 if (data !== undefined) {
                   for ( let qs = 0; qs < Object.keys(data).length; qs++ ) {
-                    if ( data[qs].question_record_conversation.conversation_conversation_level.conversation_level_name === 'Finalización') {
-                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 1') {
+                    // if ( data[qs].question_record_conversation.conversation_conversation_level.conversation_level_name === 'Finalización') {
+                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 1.') {
                         if (data[qs].question_record_response === 'Si' || data[qs].question_record_response === 'si') {
-                          let position1 = 0;
+                          const position1 = 0;
                           this.doughnutChartData1[position1]++;
                         }
                         if (data[qs].question_record_response === 'no!' || data[qs].question_record_response === 'no') {
-                          let position1 = 1;
+                          const position1 = 1;
                           this.doughnutChartData1[position1]++;
                         }
                       }
-                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 2') {
-                        let response_value = parseInt(data[qs].question_record_response, 10);
+                      if ( data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 2.') {
+                        const response_value = parseInt(data[qs].question_record_response, 10);
                         if (response_value < 6) {
-                          let position2 = response_value;
+                          const position2 = response_value;
                           this.doughnutChartData2[( position2 - 1 )]++;
                         }
                       }
-                    }
+                    //}
                   }
                 }
                 if ( con === ( Object.keys(result).length - 1)) {
                   this.chargedData = true;
-                  this.doughnutChartLabels1 = ['No', 'Si' ];
+                  this.doughnutChartLabels1 = ['Si', 'No' ];
                   this.doughnutChartType1   = 'doughnut';
                   this.doughnutChartLabels2 = ['Nada útil', 'Poco útil', 'Útil', 'Ligeramente útil', 'Muy útil'];
                   this.doughnutChartType2   = 'doughnut';
@@ -94,7 +111,51 @@ export class AdminComponent implements OnInit {
         console.log(<any>error);
       }
     );
-
+    // ===================================================================================================
+    // ===================================================================================================
+    // Consume los servicios del chatbot delay y lo muestra en el input
+    this.admin.getChabotTimeDelay().subscribe(
+      delayTime => {
+        if (delayTime !== undefined) {
+          document.getElementById('chatbot-delay').value = delayTime[0].timeout;
+        }
+      }, error => {
+        console.log(<any>error);
+      }
+    );
+    // ===================================================================================================
+    // ===================================================================================================
+    // Actualiza el valor del chatbot delay
+    this.saveChatbotDelay = function() {
+      const delayTime = {
+        id: 1,
+        timeout: document.getElementById('chatbot-delay').value
+      };
+      this.admin.addChabotTimeDelay(delayTime).subscribe(
+        result => {
+          const container_alert = $('#alert-delay-time'),
+                message_alert = $('.alert-save-delay');
+          if (result !== undefined) {
+            container_alert.removeClass('alert-danger').addClass('alert-success').show();
+            message_alert.html('').append(
+              '<strong>Genial!</strong> Los cambios se gurdaron correctamente.'
+            );
+            this.disabledEdit = false;
+            this.disabledSave = true;
+            this.hideDelayAlert = true;
+          } else {
+            container_alert.removeClass('alert-successr').addClass('alert-dange').show();
+            message_alert.html('').append(
+              '<strong>Ups!</strong> Parece que algo no salio bien.'
+            );
+            this.hideDelayAlert = true;
+          }
+        },
+        error => {
+          console.log(<any>error);
+        }
+      );
+    };
   }
 
 }

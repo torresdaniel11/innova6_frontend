@@ -89,19 +89,19 @@ export class ChatbotEvalComponent implements OnInit {
                     // ==================================================================================================
                     // ==================================================================================================
                     // Asignacion de las respuestas a las preguntas de evaluacion
-                    if (data[qs].question_record_conversation.conversation_conversation_level.conversation_level_name === 'Finalización') {
-                      if (data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 1') {
+                    // if (data[qs].question_record_conversation.conversation_conversation_level.conversation_level_name === 'Finalización') {
+                      if (data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 1.') {
                         let reponse_value = data[qs].question_record_response;
                         if (reponse_value === 'Si' || reponse_value === 'si' || reponse_value === 'no!') {
                           this.conversations[con].eval_chatbot_response1 = data[qs].question_record_response;
                         }
                       }
-                      if (data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 2') {
+                      if (data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Pregunta 2.') {
                         if (parseInt(data[qs].question_record_response, 10) < 6) {
                           this.conversations[con].eval_chatbot_response2 = data[qs].question_record_response;
                         }
                       }
-                    }
+                    // }
                   }
                 }
               }
