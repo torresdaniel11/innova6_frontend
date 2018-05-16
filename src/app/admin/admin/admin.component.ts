@@ -117,7 +117,7 @@ export class AdminComponent implements OnInit {
     this.admin.getChabotTimeDelay().subscribe(
       delayTime => {
         if (delayTime !== undefined) {
-          document.getElementById('chatbot-delay').value = delayTime[0].timeout;
+          $('#chatbot-delay').val(delayTime[0].timeout);
         }
       }, error => {
         console.log(<any>error);
@@ -129,7 +129,7 @@ export class AdminComponent implements OnInit {
     this.saveChatbotDelay = function() {
       const delayTime = {
         id: 1,
-        timeout: document.getElementById('chatbot-delay').value
+        timeout: $('#chatbot-delay').val() // document.getElementById('chatbot-delay').value
       };
       this.admin.addChabotTimeDelay(delayTime).subscribe(
         result => {
