@@ -16,6 +16,10 @@
 Desarrollar una página Web para el grupo GTI - Conecta-TE de la Universidad de los Andes para poder tener acceso a un catalogo de informacion y servicios de consulta.
 
 
+### Arquitectura de Servicios:
+La funcionalidad se desarrollo en 2 capas de servicios: los del frontend y los del backend. En este repositorio se encuentran los servicios relacionados con el frontend los cuales consumen las funcionalidades proporcionadas por los servicios del backend.
+
+
 ### Tecnologias:
 Para este desarrollo hemos hecho uso de las siguientes tecnologias:
 
