@@ -34,7 +34,7 @@ export class ArticlesComponent implements OnInit {
     // Evento para borrar de la tabla el articulo borrado
     this.delete = function() {
       let index = this.articles.indexOf(this.selectedArticle);
-      this.articles = this.articles.filter((val, i) => i != index);
+      this.articles = this.articles.filter((val, i) => i !== index);
       this.artl = null;
       this.displayDialog = false;
     };
@@ -121,7 +121,7 @@ export class ArticlesComponent implements OnInit {
                 this.categories = result;
                 for (let i = 0; i < Object.keys(this.articles).length; i++) {
                   for (let c = 0; c < Object.keys(this.categories).length; c++) {
-                    if (this.articles[i].question_category === this.categories[c].id) {
+                    if (this.articles[i].question_category.id === this.categories[c].id) {
                       this.articles[i].name_category = this.categories[c].category_name;
                     }
                   }

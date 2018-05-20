@@ -1,6 +1,6 @@
 <div>
 
-  <div class="row">
+  <div class="row pie-container">
     <div class="col-md-12" *ngIf="windowClose">
       <div class="card">
         <div class="card-body">
@@ -16,12 +16,11 @@
                 <div class="card-body">
                   <h5>¿El chatbot le fué fácil de usar?</h5>
                   <div style="display: block">
-                    <canvas baseChart
-                            [data]="doughnutChartData1"
-                            [labels]="doughnutChartLabels1"
-                            [chartType]="doughnutChartType1"
-                            (chartHover)="chartHovered1($event)"
-                            (chartClick)="chartClicked1($event)"></canvas>
+                    <canvas *ngIf="chargedData" baseChart
+                      [data]="doughnutChartData1"
+                      [labels]="doughnutChartLabels1"
+                      [chartType]="doughnutChartType1">
+                    </canvas>
                   </div>
                 </div>
               </div>
@@ -31,12 +30,10 @@
                 <div class="card-body">
                   <h5>¿Le fué útil las respuestas entregadas?</h5>
                   <div style="display: block">
-                    <canvas baseChart
+                    <canvas *ngIf="chargedData" baseChart
                             [data]="doughnutChartData2"
                             [labels]="doughnutChartLabels2"
-                            [chartType]="doughnutChartType2"
-                            (chartHover)="chartHovered2($event)"
-                            (chartClick)="chartClicked2($event)"></canvas>
+                            [chartType]="doughnutChartType2"></canvas>
                   </div>
                 </div>
               </div>
@@ -47,26 +44,6 @@
     </div>
 
     <!--
-    <div class="col-md-4 personal-clear">
-      <div class="card box-shadow">
-        <div class="card-header">
-          <div class="person-tittle">Profesores</div>
-          <div class="person-badge">
-            <span class="badge badge-light">4</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 personal-clear">
-      <div class="card">
-        <div class="card-header">
-          <div class="person-tittle">Monitores</div>
-          <div class="person-badge">
-            <span class="badge badge-light">12</span>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="col-md-8 personal-clear">
       <div class="card">
         <div class="card-header">
@@ -116,6 +93,86 @@
       </div>
     </div>
     -->
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h3>Asignar tiempo de cierre del chat</h3>
+          <hr>
+          <div id="alert-delay-time" class="alert alert-dismissible fade show" role="alert" [hidden]="!hideDelayAlert">
+            <span class="alert-save-delay"></span>
+            <button type="button" class="close" (click)="closeDelayAlert()" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend input-delaytime-label">
+                      <span class="input-group-text">Tiempo asignado:</span>
+                    </div>
+                    <input id="chatbot-delay" type="number" class="form-control" placeholder="" aria-label="chatDelay" aria-describedby="" [disabled]="disabledSave">
+                  </div>
+                  <div class="delaytime-format">El valor debe estar en segundos</div>
+                  <div class="row">
+                    <div class="col-sm-6 offset-6" style="text-align: right">
+                      <button type="button" class="btn btn-primary" (click)="editChatbotDelay()" [disabled]="disabledEdit">Cambiar tiempo</button>
+                      <button type="button" class="btn btn-success" (click)="saveChatbotDelay()" [disabled]="disabledSave">Guardar cambios</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h3>Tipos de consultores</h3>
+          <hr>
+          <div class="row">
+            <div class="col-md-4 personal-clear">
+              <div class="card box-shadow">
+                <div class="card-header">
+                  <div class="person-tittle">Profesores</div>
+                  <div class="person-badge">
+                    <span class="badge badge-light">4</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 personal-clear">
+              <div class="card">
+                <div class="card-header">
+                  <div class="person-tittle">Monitores</div>
+                  <div class="person-badge">
+                    <span class="badge badge-light">12</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 personal-clear">
+              <div class="card">
+                <div class="card-header">
+                  <div class="person-tittle">Otro</div>
+                  <div class="person-badge">
+                    <span class="badge badge-light">12</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12" style="text-align: right">
+              <button type="button" class="btn btn-success">Exportar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

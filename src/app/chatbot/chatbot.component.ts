@@ -1,7 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ChatbotService } from '../_servicios/chatbot.service';
-import {RatingModule} from 'primeng/rating';
+import { RatingModule } from 'primeng/rating';
+import { Router } from '@angular/router'
 declare var $: any;
+
 
 @Component({
   selector: 'app-chatbot',
@@ -16,10 +18,10 @@ export class ChatbotComponent implements OnInit {
   currentPregunta;
   mensajes;
   input: string;
-  verFrecuentes=false;
-  inputEnable:boolean;
-  ratingEnable:boolean;
-  constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef) {
+  verFrecuentes = false;
+  inputEnable: boolean;
+  ratingEnable: boolean;
+  constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef, private router: Router) {
     this.ratingEnable = true;
     this.inputEnable = true;
     this.estaAbierto = chatbot.abierto;
@@ -29,21 +31,38 @@ export class ChatbotComponent implements OnInit {
     this.ref.markForCheck();
   }
 
+  configuraciones;
+
   ngOnInit() {
     this.chatbot.estadoChat.subscribe(estado => {
       this.estaAbierto = estado;
     });
-    console.log(this.conversation_token)
     if (this.conversation_token === undefined || this.conversation_token === null || this.conversation_token === "null") {
       //NO HAY CONVERSACION VAMOS A CREAR UNA
-      console.log("crear");
       this.crearConversacion();
     } else {
-      console.log("recuperar")
       // HAY UNA CONVERSACION VAMOS A VER SI EXISTE EN EL BACK
       this.recuperarConversacion();
     }
-    this.printCategorias();
+    this.chatbot.getConfiguracionesChatbot().subscribe(result => {
+      this.configuraciones = result[0];
+      this.restartTimeout();
+    })
+    // this.printCategorias();
+  }
+
+  timeout;
+  restartTimeout() {
+    clearTimeout(this.timeout);
+    if (this.configuraciones == undefined) return;
+    let timeoutMilliseconds = parseInt(this.configuraciones.timeout);
+    this.timeout = setTimeout(() => { this.finalizaChatbotTimeout() }, timeoutMilliseconds);
+  }
+
+  finalizaChatbotTimeout() {
+    this.pushMensaje('chatbot', "Se finaliza chatbot por inactividad");
+    this.inputEnable = false;
+    this.cerrarChat();
   }
 
   crearConversacion() {
@@ -77,14 +96,20 @@ export class ChatbotComponent implements OnInit {
     );
   }
 
+  reiniciarChatbot(){
+    this.mensajes = [];
+    sessionStorage.removeItem("conversation_token");
+    this.crearConversacion();
+  }
+
   siguientePregunta() {
     if (this.conversation_token == null || this.conversation_token == undefined) {
       console.log("pere tantico")
     } else {
+      this.restartTimeout();
       this.chatbot.consultarPreguntaARealizar(this.conversation_token).subscribe(
         result => {
           this.currentPregunta = result;
-          console.log(result)
           var pregunta = this.currentConversacion.conversation_name == "" ? result['question_description'] : this.currentConversacion.conversation_name + ", " + result['question_description'];
           if (result['question_replace']) {
             // CATEGORIAS
@@ -93,27 +118,38 @@ export class ChatbotComponent implements OnInit {
             }).catch(error => {
               console.log(error);
             });
-          } else if(result['question_platform']){
+          } else if (result['question_type_user']) {
+            //TIPO DE USUARIO
+            this.arrayTiposDeUsuario().then(methodResult => {
+              this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
+            }).catch(error => {
+              console.log(error);
+            });
+          } else if (result['question_platform']) {
             //PLATAFORMA
             let plataformas = ["Moodle", "Sicua"]
             this.pushMensajeConOpciones('chatbot', pregunta, plataformas);
-          } else if(result['question_load_question']){
+          } else if (result['question_load_question']) {
             // PREGUNTAS FRECUENTES
             this.arrayPreguntasFrecuentes().then(methodResult => {
               this.pushMensajeConPreguntas('chatbot', pregunta, methodResult);
             }).catch(error => {
               console.log(error);
             });
-          } else if(result['question_load_article']){
+          } else if (result['question_load_article']) {
             //RECURSO
-            this.pushMensaje('chatbot', pregunta)
-          } else if(result['question_evaluate_one']){
+            this.arrayRecursos().then(methodResult => {
+              this.pushMensajeRecursos('chatbot', pregunta, methodResult);
+            }).catch(error => {
+              console.log(error);
+            })
+          } else if (result['question_evaluate_one']) {
             //EVALUACION SI O NO
             this.pushMensajeCalificacion('chatbot', pregunta, 'si-no')
-          } else if(result['question_evaluate_two']){
+          } else if (result['question_evaluate_two']) {
             //EVALUACION RATING
             this.pushMensajeCalificacion('chatbot', pregunta, '1-5')
-          } else if(result['question_finish']){
+          } else if (result['question_finish']) {
             //FIN CONVERSACION
             this.pushMensaje('chatbot', pregunta)
             this.inputEnable = false;
@@ -157,23 +193,7 @@ export class ChatbotComponent implements OnInit {
       this.siguientePregunta();
     });
   }
-
-  printCategorias() {
-    return new Promise((resolve, reject) => {
-      var result_string: string = "";
-      this.chatbot.getCategorias().subscribe(result => {
-        for (var i = 0; i < Object.keys(result).length; i++) {
-          let cat = result[i].category_name;
-          result_string += "<span class='hola'>" + cat + "</span>";
-        }
-        resolve(result_string);
-      }, error => {
-        console.log(<any>error);
-        reject(error.error);
-      })
-    })
-  }
-
+  
   arrayCategorias() {
     return new Promise((resolve, reject) => {
       var result_array = [];
@@ -182,8 +202,6 @@ export class ChatbotComponent implements OnInit {
           let cat = result[i].category_name;
           result_array.push(cat);
         }
-        console.log(result_array)
-
         resolve(result_array);
       }, error => {
         console.log(<any>error);
@@ -192,7 +210,7 @@ export class ChatbotComponent implements OnInit {
     })
   }
 
-  arrayPreguntasFrecuentes(){
+  arrayPreguntasFrecuentes() {
     return new Promise((resolve, reject) => {
       var result_array = [];
       this.chatbot.getPreguntasFrecuentes(this.conversation_token).subscribe(result => {
@@ -200,13 +218,55 @@ export class ChatbotComponent implements OnInit {
           let pf = result[i].frequent_questions_name;
           result_array.push(pf);
         }
-        console.log(result_array)
         resolve(result_array);
       }, error => {
         console.log(<any>error);
         reject(error.error);
       })
     })
+  }
+
+  arrayTiposDeUsuario() {
+    return new Promise((resolve, reject) => {
+      var result_array = [];
+      this.chatbot.getTiposDeUsuario().subscribe(result => {
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let tipoDeUsuario = result[i].type_user_name;
+          result_array.push(tipoDeUsuario);
+        }
+        resolve(result_array);
+      }, error => {
+        console.log(<any>error);
+        reject(error.error);
+      })
+    })
+  }
+
+  arrayRecursos() {
+    return new Promise((resolve, reject) => {
+      var result_array = [];
+      this.chatbot.getRecursos(this.conversation_token).subscribe(result => {
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let recurso = result[i];
+          result_array.push(recurso);
+        }
+        resolve(result_array);
+      }, error => {
+        console.log(<any>error);
+        reject(error.error);
+      })
+    })
+  }
+
+  navegarRecurso(tipo, url, nombre) {
+    this.set("Quiero ver: " + nombre);
+    if (tipo == "INTERNO") {
+      this.router.navigate([url]);
+    } else if (tipo == "PDF" || tipo == "YOUTUBE" || tipo == "PAGE_WEB") {
+      this.router.navigate(['/recurso'], { queryParams: { url: url, tipo: tipo } });
+    } else {
+      console.log("unkown")
+    }
   }
 
   pushMensaje(de: string, mensaje: string) {
@@ -235,7 +295,7 @@ export class ChatbotComponent implements OnInit {
     this.scrollBottom();
   }
 
-  pushMensajeCalificacion(de:string, mensaje:string, tipo_calificacion:string){
+  pushMensajeCalificacion(de: string, mensaje: string, tipo_calificacion: string) {
     this.mensajes.push({
       "de": de,
       "mensaje": mensaje,
@@ -244,8 +304,18 @@ export class ChatbotComponent implements OnInit {
     this.scrollBottom();
   }
 
-  marcarCalificacion(event){
-    this.set(event.value+"")
+  pushMensajeRecursos(de: string, mensaje: string, recursos) {
+    this.mensajes.push({
+      "de": de,
+      "mensaje": mensaje,
+      "recursos": recursos
+    });
+    this.scrollBottom();
+  }
+
+
+  marcarCalificacion(event) {
+    this.set(event.value + "")
     this.ratingEnable = false;
   }
 
@@ -267,5 +337,6 @@ export class ChatbotComponent implements OnInit {
   scrollBottom() {
     setTimeout(function() { $("#chat_body").scrollTop($("#chat_body")[0].scrollHeight); }, 10)
   }
+
 
 }
