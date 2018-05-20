@@ -47,3 +47,7 @@
   margin-bottom: 15px;
   color: #d98686;
 }
+
+.user-export {
+  cursor: pointer;
+}

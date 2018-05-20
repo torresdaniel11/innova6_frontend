@@ -28,6 +28,13 @@ export class AdminComponent implements OnInit {
   disabledSave: boolean;
   saveChatbotDelay;
   hideDelayAlert: boolean;
+  // =====================================================
+  // variables del contador de perfiles del chatbot
+  profesor;
+  monitor;
+  moodle;
+  sicua;
+  categiries;
   constructor(private admin: AdminService) {
     this.selectWindow = true;
     this.windowClose = true;
@@ -43,6 +50,11 @@ export class AdminComponent implements OnInit {
     this.disabledSave = true;
     this.saveChatbotDelay = '';
     this.hideDelayAlert = false;
+    this.profesor = 0;
+    this.monitor = 0;
+    this.moodle = 0;
+    this.sicua = 0;
+    this.categiries =  [];
   }
   // ==============================================================================
   // ==============================================================================
@@ -60,7 +72,28 @@ export class AdminComponent implements OnInit {
   public closeDelayAlert() {
     this.hideDelayAlert = false;
   }
+  public  userProfileExport() {
+    $('#user-profile').table2excel({
+      exclude: '.noExl',
+      name: 'Worksheet Name',
+      filename: 'Usuarios'
+    });
+  }
   ngOnInit() {
+    this.admin.categories().subscribe(
+      result => {
+        if (result !== undefined) {
+          console.log(result);
+          for (let ctg = 0; ctg < Object.keys(result).length; ctg++) {
+            let nameCategory = result[ctg].category_name;
+            this.categiries.push({ name: nameCategory, value: 0 });
+          }
+          console.log(this.categiries);
+        }
+      }, error => {
+          console.log(<any>error);
+      }
+    )
     // ===================================================================================================
     // ===================================================================================================
     // Consume los servicios de conversation para mostrar en la tabla
@@ -91,7 +124,31 @@ export class AdminComponent implements OnInit {
                           this.doughnutChartData2[( position2 - 1 )]++;
                         }
                       }
-                    //}
+                      // ===================================================================================================
+                      // Contador de profesores y monitores
+                      if (data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Tipo de usuario.') {
+                        data[qs].question_record_response === 'Profesor' ? this.profesor++ : this.monitor++;
+                      }
+                      // ===================================================================================================
+                      // Contador de plataforma
+                      if (data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Consulta de Plataforma.') {
+                        data[qs].question_record_response === 'Moodle' ? this.moodle++ : this.sicua++;
+                      }
+                      // ===================================================================================================
+                      // Contador de plataforma
+                      if (data[qs].question_record_question.question_conversation_level.conversation_level_name === 'Seleccionar categoria.') {
+                        data[qs].question_record_response === 'Moodle' ? this.moodle++ : this.sicua++;
+                        for ( let ctgy = 0; ctgy < Object.keys(this.categiries).length; ctgy++) {
+                          if (data[qs].question_record_response === Object.values(this.categiries)[ctgy].name) {
+                            // let category = Object.values(this.categiries)[ctgy].name;
+                            let categoryArray =  Object.values(this.categiries)[ctgy];
+                            categoryArray.value++;
+                            this.categiries[ctgy] = categoryArray;
+                          }
+                        }
+                        console.log(this.categiries);
+                      }
+                    // }
                   }
                 }
                 if ( con === ( Object.keys(result).length - 1)) {
@@ -156,6 +213,15 @@ export class AdminComponent implements OnInit {
         }
       );
     };
+    $('.btn-export').on('click', function (e) {
+      e.preventDefault();
+      const dataSxport = $(this).attr('data-export');
+      $('#'+dataSxport).table2excel({
+        exclude: '.noExl',
+        name: 'Worksheet Name',
+        filename: dataSxport
+      });
+    });
   }
 
 }
