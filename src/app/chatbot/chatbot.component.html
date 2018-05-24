@@ -8,7 +8,8 @@
           <span class="openHeader">Chatbot grupo de tecnología Contecta-TE</span>
         </div>
         <div style="float:right">
-          <a (click)="cerrarChat()">X</a>
+          <a (click)="cerrarChat()" style="float:right;color:white">X</a>
+          <div (click)="reiniciarChatbot()" style="color: #eee;"><a>reiniciar</a></div>
         </div>
       </div>
     </div>
@@ -18,11 +19,14 @@
           <div *ngFor="let mensaje of mensajes" [ngClass]="(mensaje.de=='chatbot')?'msj_chatbot':'msj_usuario'" >
             <div class="mensaje" >{{mensaje.mensaje}}
 
+              <!-- OPCIONES -->
               <div *ngFor="let opcion of mensaje.opciones">
                 <li>
                   <a (click)="set(opcion)">{{opcion}}</a>
                 </li>
               </div>
+
+              <!-- PREGUNTAS FRECUENTES -->
               <div *ngIf="mensaje.preguntas">
                 <a *ngIf="!verFrecuentes" (click)="verFrecuentes = true">Ver preguntas frecuentes</a>
                 <div *ngIf="verFrecuentes">
@@ -31,24 +35,43 @@
                   </div>
                   <div *ngFor="let pregunta of mensaje.preguntas">
                     <li>
-                      <a (click)="set(pregunta)">{{pregunta}}</a>
+                      <a (click)="setPregunta(pregunta)">{{pregunta}}</a>
                     </li>
                   </div>
+                  <div *ngIf="!seccionExtra">
+                    <button class="poll-button" (click)="ver('todas')">Ver todas las preguntas frecuentes</button>
+                    <button class="poll-button" (click)="ver('sugerencias')">Ver sugerencias</button>
+                  </div>
+                  <div *ngIf="seccionExtra">
+                    <div *ngFor="let extra of extras">
+                      <li>
+                         <a (click)="setPregunta(extra)">{{extra}}</a>
+                      </li>
+                    </div>
+                  </div>
                 </div>
-
               </div>
 
+              <!-- RECURSOS -->
+              <div *ngFor="let recurso of mensaje.recursos">
+                <li>
+                  <a (click)="navegarRecurso(recurso.article_type_article.type_article_name, recurso.article_url, recurso.article_tittle)">{{recurso.article_tittle}}</a>
+                </li>
+              </div>
+
+              <!-- CALIFICACION SI NO  -->
               <div *ngIf="mensaje.tipo_poll == 'si-no' ">
-                <!--  -->
                 <div>
                   <button class="poll-button" (click)="set('Si')">Si</button>
                   <button class="poll-button" (click)="set('No')">No</button>
                 </div>
               </div>
 
+              <!-- CALIFICACION 1-5 -->
               <div *ngIf="mensaje.tipo_poll == '1-5' ">
                 <p-rating [(ngModel)]="val" [cancel]="false" (onRate)="marcarCalificacion($event)" [disabled]="!ratingEnable"></p-rating>
               </div>
+
             </div>
           </div>
         </div>

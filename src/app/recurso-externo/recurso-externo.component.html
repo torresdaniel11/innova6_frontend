@@ -1,0 +1,41 @@
+<div >
+  <section id="top_content container-fluid">
+    <div class="container-fluid">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav navbar-left">
+            <li>
+              <div>
+                <h1 class="header_green"><b>GTI Contecta-TE</b></h1>
+                <span class="header_black">
+                  GRUPO TECNOLOGÍA
+                </span >
+                <span class="header_black">
+                  CONECTA-TE
+                </span >
+              </div>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right logos">
+            <li><a href="https://conectate.uniandes.edu.co/" [target]="'_blank'"><img   src="assets/images/logo_conectate.png" alt="Conecta-te logo"  /></a></li>
+            <li><a href="https://uniandes.edu.co" [target]="'_blank'"><img   src="assets/images/Logo.png" alt="uniandes logo" style="margin-top: 10px;"  /></a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </section>
+  <section id="middle_content" class="container-fluid article-middle-content">
+    <div id="content-container">
+      <div *ngIf="tipo=='PDF'">
+        <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(pdfUrl)" style="width:90vw; height:400px;" frameborder="0"></iframe>
+      </div>
+      <div *ngIf="tipo=='YOUTUBE'">
+        <youtube-player [videoId]="id" width="500" height="300"  ></youtube-player>
+      </div>
+      <div *ngIf="tipo=='PAGE_WEB'">
+          <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(url)" style="width:90vw; height:500px;" frameborder="0"></iframe>
+      </div>
+    </div>
+
+  </section>
+</div>

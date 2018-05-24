@@ -1,4 +1,6 @@
 import { ViewEncapsulation, Component, OnInit } from '@angular/core';
+import {AdminService} from '../../_servicios/admin.service';
+import {ConfirmationService} from 'primeng/api';
 declare var $:any;
 
 @Component({
@@ -8,73 +10,59 @@ declare var $:any;
   encapsulation: ViewEncapsulation.None,
 })
 export class TreeComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-    let hackurl = 'https://cors-anywhere.herokuapp.com/';
-    $.getJSON(hackurl+"https://innova6.herokuapp.com/questions/", function (data) {
-      var questions = data;
-
-      for( var i=0; i< questions.length; i++){
-        $("#tree-questions").append(
-          "<li class='list-group-item'>" +
-          "<div class='row'>"+
-          "<div class='col-md-8'>" +
-          "<span class='tree-question-tittle'>" + questions[i].question_description +"</span>" +
-          "</div>" +
-          "<div class='col-md-4 tree-events-questions'>" +
-          "<span class='tree-question-edit'>" +
-          "<button id='"+ questions[i].id +"' type='button' class='btn btn-primary btn-sm'>" +
-          "<i class='fa fa-pencil' aria-hidden='true'></i>" +
-          "Editar" +
-          "</button>" +
-          "</span>" +
-          "<span class='tree-question-edit'>" +
-          "</span>" +
-          "</div>" +
-          "</div>" +
-          "</li>"
-        );
-      }
-
-      //console.log(questions)
-    }).fail(function () {
-      return "Ups! something happen";
-    });
-
-    $("#tree-questions").on("click", "button", function () {
-      var button_id = $(this).attr("id");
-      window.location.href = 'admin/chatbot/'+button_id;
-    })
-
+  cols: any[];
+  questions;
+  msgs;
+  constructor(private admin: AdminService, private confirmationService: ConfirmationService) {
+    this.questions = [];
+    this.msgs = [];
   }
-
-}
-
-/*
-* $("#tree-questions").append(
-          "<li class='list-group-item'>" +
-          "<div class='row'>"+
-          "<div class='col-md-8'>" +
-          "<span class='tree-question-tittle'>" + questions[i].question_description +"</span>" +
-          "</div>" +
-          "<div class='col-md-4 tree-events-questions'>" +
-          "<span class='tree-question-date'>31-03-2018</span>" +
-          "<span class='tree-question-edit'>" +
-          "<button id='"+ questions[i].id +"' type='button' class='btn btn-primary btn-sm'>" +
-          "<i class='fa fa-pencil' aria-hidden='true'></i>" +
-          "Editar" +
-          "</button>" +
-          "</span>" +
-          "<span class='tree-question-edit'>" +
-          "<button  type='button' class='btn btn-danger btn-sm'>" +
-          "<i class='fa fa-times' aria-hidden='true'></i>" +
-          "Eliminar" +
-          "</button>" +
-          "</span>" +
-          "</div>" +
-          "</div>" +
-          "</li>"
+  // ===================================================================================================
+  // ===================================================================================================
+  // Evento para borrar articulos
+  confirm(event) {
+    const target = event.target || event.srcElement || event.currentTarget;
+    const idAttr = target.attributes.id;
+    const value = idAttr.nodeValue;
+    console.log(idAttr);
+    this.confirmationService.confirm({
+      message: '¿Confirmas la eliminación del artículo?',
+      header: 'Confirmación de eliminación',
+      icon: 'fa fa-trash',
+      accept: () => {
+        this.admin.deleteQuestions(value).subscribe(
+          result => {
+            this.msgs = [{severity: 'info', summary: 'Confirmed', detail: 'Artículo barrado'}];
+            console.log(result);
+            window.location.reload();
+          }, error => {
+            console.log(<any>error);
+          }
         );
-        */
+      },
+      reject: () => {
+        this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'Eliminación cancelada'}];
+      }
+    });
+  }
+  ngOnInit() {
+    this.admin.getQuestions().subscribe(
+      result => {
+        if (result !== undefined) {
+          this.questions = result;
+        }
+      }, error => {
+        console.log(<any>error);
+      }
+    );
+    $('#tree-questions').on('click', 'button', function () {
+      const button_id = $(this).attr('id');
+      window.location.href = 'admin/chatbot/' + button_id;
+    });
+    this.cols = [
+      { field: 'id', header: 'ID', width: '5%' },
+      { field: 'question_description', header: 'Descripción', width: '75%' },
+      { field: 'id', header: 'Editar', width: '20%'}
+    ];
+  }
+}
