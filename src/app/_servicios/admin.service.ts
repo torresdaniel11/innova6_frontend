@@ -72,4 +72,15 @@ export class AdminService {
     return this.http.get(uri);
     // end http get
   }
+  getQuestions() {
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    let uri = hackurl + 'https://innova6.herokuapp.com/questions/';
+    return this.http.get(uri);
+    // end http get
+  }
+  deleteQuestions(id: string) {
+    let hackurl = 'https://cors-anywhere.herokuapp.com/';
+    let uri = hackurl + 'https://innova6.herokuapp.com/questions/' + id + '/';
+    return this.http.delete(uri);
+  }
 }

@@ -1,12 +1,51 @@
 <div>
+  <p-growl [value]="msgs"></p-growl>
   <div class="card">
-
     <div class="card-body">
-      <h3>Edición de artículos</h3>
+      <h3>Edición de preguntas de coleción de información</h3>
       <hr>
-      <ul id="tree-questions" class="list-group">
-
-      </ul>
+      <div class="btn-create-article" style="margin-bottom: 15px;">
+        <button [routerLink]="'/admin/chatbot/$new_question'" style="cursor: pointer" ngClass="btn btn-sm btn-success">
+          <i class="fa fa-plus-square" aria-hidden="true"></i> Nueva pregunta
+        </button>
+      </div>
+      <p-table #dt [columns]="cols" [value]="questions" [paginator]="true" [rows]="10" [resizableColumns]="true">
+        <ng-template pTemplate="caption">
+          <div style="text-align: right">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+          </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col *ngFor="let col of columns" [style.width]="col.width">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns"  [pSortableColumn]="col.field" pResizableColumn>
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns" class="ui-resizable-column">
+              <div class="text-aling-btn" style="text-align: center" *ngIf="col.header == 'Editar'">
+                <button [routerLink]="'/admin/chatbot/' + rowData[col.field]" style="cursor: pointer" ngClass="btn btn-sm btn-success">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                </button>
+                <button id="{{ rowData[col.field] }}" (click)="confirm($event)" style="cursor: pointer" ngClass="btn btn-sm btn-danger btn_borrar_question">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Borrar
+                </button>
+              </div>
+              <span *ngIf="col.header != 'Editar'">{{rowData[col.field]}}</span>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <!--<ul id="tree-questions" class="list-group"></ul> -->
     </div>
 
   </div>

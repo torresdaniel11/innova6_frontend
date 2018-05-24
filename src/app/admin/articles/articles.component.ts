@@ -33,15 +33,15 @@ export class ArticlesComponent implements OnInit {
     // ===================================================================================================
     // Evento para borrar de la tabla el articulo borrado
     this.delete = function() {
-      let index = this.articles.indexOf(this.selectedArticle);
+      const index = this.articles.indexOf(this.selectedArticle);
       this.articles = this.articles.filter((val, i) => i !== index);
       this.artl = null;
       this.displayDialog = false;
     };
   }
   onRowSelect(event) {
-    $(".btn-delete").prop('disabled', true);
-    $("#"+event.data.id).prop('disabled', false);
+    $('.btn-delete').prop('disabled', true);
+    $('#' + event.data.id).prop('disabled', false);
     console.log(event.data);
   }
   // ===================================================================================================
