@@ -55,12 +55,12 @@ export class ChatbotService {
     return this.http.get(uri);
   }
 
-  getPreguntasFrecuentes(token:string) {
+  getPreguntasFrecuentes(token: string) {
     let uri = this.hackurl + 'http://innova6.herokuapp.com/retrieve_frequency_questions/' + token;
     return this.http.get(uri);
   }
 
-  getRecursos(token:string) {
+  getRecursos(token: string) {
     let uri = this.hackurl + 'https://innova6.herokuapp.com/retrieve_article/' + token;
     return this.http.get(uri);
   }
@@ -70,8 +70,18 @@ export class ChatbotService {
     return this.http.get(uri);
   }
 
-  getTiposDeUsuario(){
+  getTiposDeUsuario() {
     let uri = this.hackurl + 'https://innova6.herokuapp.com/type_users/';
+    return this.http.get(uri);
+  }
+
+  getTodasLasFrecuentes() {
+    let uri = this.hackurl + 'https://innova6.herokuapp.com/frequent_questions/';
+    return this.http.get(uri);
+  }
+
+  getSugerencias(token: string) {
+    let uri = this.hackurl + 'https://innova6.herokuapp.com/retrieve_suggestion_questions/' + token;
     return this.http.get(uri);
   }
 
