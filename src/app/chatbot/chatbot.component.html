@@ -34,7 +34,7 @@
                     Aún no hay preguntas frecuentes
                   </div>
                   <div *ngFor="let pregunta of mensaje.preguntas">
-                    <li *ngIf="!seccionExtra">
+                    <li>
                       <a (click)="set(pregunta)">{{pregunta}}</a>
                     </li>
                   </div>
