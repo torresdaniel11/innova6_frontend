@@ -21,6 +21,9 @@ export class ChatbotComponent implements OnInit {
   verFrecuentes = false;
   inputEnable: boolean;
   ratingEnable: boolean;
+  seccionExtra: boolean = false;
+  extras: any[];
+  visiteRecurso: boolean = false;
   constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef, private router: Router) {
     this.ratingEnable = true;
     this.inputEnable = true;
@@ -29,6 +32,7 @@ export class ChatbotComponent implements OnInit {
     this.input = "";
     this.mensajes = [];
     this.ref.markForCheck();
+    this.extras = []
   }
 
   configuraciones;
@@ -96,7 +100,7 @@ export class ChatbotComponent implements OnInit {
     );
   }
 
-  reiniciarChatbot(){
+  reiniciarChatbot() {
     this.mensajes = [];
     sessionStorage.removeItem("conversation_token");
     this.crearConversacion();
@@ -193,7 +197,7 @@ export class ChatbotComponent implements OnInit {
       this.siguientePregunta();
     });
   }
-  
+
   arrayCategorias() {
     return new Promise((resolve, reject) => {
       var result_array = [];
@@ -259,7 +263,10 @@ export class ChatbotComponent implements OnInit {
   }
 
   navegarRecurso(tipo, url, nombre) {
-    this.set("Quiero ver: " + nombre);
+    if (!this.visiteRecurso) {
+      this.visiteRecurso = true;
+      this.set("Quiero ver: " + nombre);
+    }
     if (tipo == "INTERNO") {
       this.router.navigate([url]);
     } else if (tipo == "PDF" || tipo == "YOUTUBE" || tipo == "PAGE_WEB") {
@@ -313,7 +320,6 @@ export class ChatbotComponent implements OnInit {
     this.scrollBottom();
   }
 
-
   marcarCalificacion(event) {
     this.set(event.value + "")
     this.ratingEnable = false;
@@ -337,6 +343,30 @@ export class ChatbotComponent implements OnInit {
   scrollBottom() {
     setTimeout(function() { $("#chat_body").scrollTop($("#chat_body")[0].scrollHeight); }, 10)
   }
+
+
+  ver(param: string) {
+    this.seccionExtra = true;
+    if (param == 'todas') {
+      this.chatbot.getTodasLasFrecuentes().subscribe(result => {
+        console.log(result);
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let recurso = result[i]['frequent_questions_name'];
+          this.extras.push(recurso);
+        }
+      });
+    } else if (param = 'sugerencias') {
+      this.chatbot.getSugerencias(this.conversation_token).subscribe(result => {
+        console.log(result);
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let recurso = result[i]['frequent_questions_name'];
+          this.extras.push(recurso);
+        }
+      });
+    }
+
+  }
+
 
 
 }
