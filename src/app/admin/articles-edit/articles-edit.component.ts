@@ -60,21 +60,23 @@ export class ArticlesEditComponent implements OnInit {
     const text_container = $('#article-content');
     this.new_data = {
       'id': split_url[1],
-      'article_tittle': $('#articleTittle').val() !== undefined ? $('#articleTittle').val() : 'algo',
-      'article_content': text_container.text() !== undefined && text_container.text() !== '' ? text_container.text() : 'algo',
-      'article_slug': $('#articleTittle').val() !== undefined ? $('#articleTittle').val() : 'algo',
+      'article_tittle': $('#articleTittle').val() !== undefined ? $('#articleTittle').val() : 'No aplica',
+      'article_content': text_container.text() !== undefined && text_container.text() !== '' ? text_container.text() : 'No aplica',
+      'article_slug': $('#articleTittle').val() !== undefined ? $('#articleTittle').val() : 'No aplica',
+      'article_create_date': '2018-04-22T21:21:15.702075Z',
+      'article_update_date': '2018-04-22T21:21:15.702075Z',
       'question_category': {
         'id': art_id_category,
-        'category_name': art_name_category !== undefined ? art_name_category : 'algo'
+        'category_name': art_name_category !== undefined ? art_name_category : 'No aplica'
       },
-      'article_url': $('#articleLink').val() !== undefined ? $('#articleLink').val() : 'algo',
+      'article_url': $('#articleLink').val() !== undefined ? $('#articleLink').val() : 'No aplica',
       'article_type_article': {
         'id': id_type_art,
-        'type_article_name': $('#article-type-id').text() !== undefined ? $('#article-type-id').text() : 'algo'
+        'type_article_name': $('#article-type-id').text() !== undefined ? $('#article-type-id').text() : 'No aplica'
       }
     };
-    const  array_data = Object.values(this.new_data);
     /*
+    const  array_data = Object.values(this.new_data);
     for ( let a = 1; a < array_data.length; a++) {
       if ( array_data[a] === '' || array_data[a] === 'empty' || array_data[a] === 'new_articles' || array_data[a] === undefined ) {
         crud_ctr = 0;
@@ -133,7 +135,6 @@ export class ArticlesEditComponent implements OnInit {
       data => {
         if ( data !== undefined) {
           this.articles = data;
-          console.log(this.articles);
           const url = window.location.href;
           const split_url = url.split('$_id');
           this.admin.categories().subscribe(

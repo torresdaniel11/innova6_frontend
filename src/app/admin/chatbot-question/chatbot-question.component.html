@@ -21,10 +21,7 @@
           <label for="keywordsPregunta">Nivel de conversación:</label>
           <div class="dropdown">
             <button id="btn-conversation-level" class="dropbtn"></button>
-            <div class="dropdown-content">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
+            <div id="nv-conversartion" class="dropdown-content">
             </div>
           </div>
 
@@ -37,8 +34,11 @@
           </div>
         </div>
         <hr>
-        <div class="question-btn-submit">
+        <div class="question-btn-submit btn-update">
           <button id="btn-question-send" type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> &nbsp; Save</button>
+        </div>
+        <div class="question-btn-submit btn-create" style="display: none">
+          <button id="btn-question-post" type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> &nbsp; Crear</button>
         </div>
 
         <div class="event-request-alert"></div>
