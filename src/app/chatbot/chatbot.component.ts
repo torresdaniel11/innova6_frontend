@@ -24,6 +24,7 @@ export class ChatbotComponent implements OnInit {
   seccionExtra: boolean = false;
   extras: any[];
   visiteRecurso: boolean = false;
+  visitePregunta: boolean = false;
   constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef, private router: Router) {
     this.ratingEnable = true;
     this.inputEnable = true;
@@ -180,6 +181,13 @@ export class ChatbotComponent implements OnInit {
   set(opcion: string) {
     this.input = opcion;
     this.enviar();
+  }
+
+  setPregunta(opcion:string){
+    if (!this.visitePregunta) {
+      this.visitePregunta = true;
+      this.set(opcion);
+    }
   }
 
   //level 5 categorias
@@ -343,7 +351,6 @@ export class ChatbotComponent implements OnInit {
   scrollBottom() {
     setTimeout(function() { $("#chat_body").scrollTop($("#chat_body")[0].scrollHeight); }, 10)
   }
-
 
   ver(param: string) {
     this.seccionExtra = true;
