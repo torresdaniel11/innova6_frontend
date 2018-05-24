@@ -23,6 +23,7 @@ export class ChatbotComponent implements OnInit {
   ratingEnable: boolean;
   seccionExtra: boolean = false;
   extras: any[];
+  visiteRecurso: boolean = false;
   constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef, private router: Router) {
     this.ratingEnable = true;
     this.inputEnable = true;
@@ -31,7 +32,7 @@ export class ChatbotComponent implements OnInit {
     this.input = "";
     this.mensajes = [];
     this.ref.markForCheck();
-    this.extras=[]
+    this.extras = []
   }
 
   configuraciones;
@@ -262,7 +263,10 @@ export class ChatbotComponent implements OnInit {
   }
 
   navegarRecurso(tipo, url, nombre) {
-    this.set("Quiero ver: " + nombre);
+    if (!this.visiteRecurso) {
+      this.visiteRecurso = true;
+      this.set("Quiero ver: " + nombre);
+    }
     if (tipo == "INTERNO") {
       this.router.navigate([url]);
     } else if (tipo == "PDF" || tipo == "YOUTUBE" || tipo == "PAGE_WEB") {
