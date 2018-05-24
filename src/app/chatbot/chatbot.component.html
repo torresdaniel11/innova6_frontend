@@ -35,7 +35,7 @@
                   </div>
                   <div *ngFor="let pregunta of mensaje.preguntas">
                     <li>
-                      <a (click)="set(pregunta)">{{pregunta}}</a>
+                      <a (click)="setPregunta(pregunta)">{{pregunta}}</a>
                     </li>
                   </div>
                   <div *ngIf="!seccionExtra">
@@ -45,7 +45,7 @@
                   <div *ngIf="seccionExtra">
                     <div *ngFor="let extra of extras">
                       <li>
-                         <a (click)="set(extra)">{{extra}}</a>
+                         <a (click)="setPregunta(extra)">{{extra}}</a>
                       </li>
                     </div>
                   </div>
