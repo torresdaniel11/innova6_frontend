@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { YoutubePlayerModule } from 'ng2-youtube-player';
+import { YoutubePlayerModule } from 'ngx-youtube-player';
 @Component({
   selector: 'app-recurso-externo',
   templateUrl: './recurso-externo.component.html',
@@ -30,7 +30,7 @@ export class RecursoExternoComponent implements OnInit {
       this.id = this.url.split("?v=")[1];
     } else if( this.tipo == "PDF"){
       this.pdfUrl = "http://docs.google.com/gview?url=" + this.url + "&embedded=true"
-    } 
+    }
   }
 
 

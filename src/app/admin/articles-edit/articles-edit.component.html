@@ -7,12 +7,21 @@
         <button pButton type="button" (click)="enviar()" label="Guardar cambios" class="ui-button-success"></button>
       </div>
       <p-messages [(value)]="msgs"></p-messages>
+
       <div class="form-group style-form-group">
+        <label><b>Selecciona el tipo de artículo:</b></label>
+        <p-dropdown [options]="list_type_article" [(ngModel)]="selectedTypeArticles" (onChange)="changeTypeArticle($event)" optionLabel="type_article_name" placeholder="Tipo de artículo" filter="true"></p-dropdown>
+        <p style="margin-top: 20px;" *ngIf="selectedTypeArticles == ''">Tipo de artículo seleccionado: <b id="article-type-id">{{ type_article }}</b></p>
+        <p style="margin-top: 20px;" *ngIf="selectedTypeArticles != ''">Tipo de artículo seleccionado: <b id="article-type-id">{{ selectedTypeArticles ? selectedTypeArticles.type_article_name : 'none' }}</b></p>
+      </div>
+
+      <div class="form-group style-form-group" *ngIf="type_article == 'INTERNO'">
         <label for="articleTittle"><b>Título del artículo:</b></label>
         <hr class="edit-articles-hr">
         <input id="article-tittle" type="text" class="form-control" id="articleTittle" placeholder="" value="{{article_tittle}}">
       </div>
-      <div class="form-groups style-form-group">
+
+      <div class="form-groups style-form-group" *ngIf="type_article == 'INTERNO'">
         <label><b>Contenido del artículo:</b></label>
         <hr class="edit-articles-hr">
         <p-editor [(ngModel)]="article_content" [style]="{'height':'320px', 'background-color': '#FFFFFF'}"></p-editor>
@@ -21,12 +30,20 @@
           <button pButton type="button" label="Borrar contenido actual" icon="fa-close" (click)="article_content=null"></button>
         </div>
       </div>
+
       <div class="form-group style-form-group">
         <label><b>Seleccione una categoría:</b></label>
         <p-dropdown [options]="categories" [(ngModel)]="selectedCategories" optionLabel="category_name" placeholder="Categorías" filter="true"></p-dropdown>
         <p style="margin-top: 20px;" *ngIf="selectedCategories == ''">Categoría seleccionada: <b id="category-id">{{ article_category }}</b></p>
         <p style="margin-top: 20px;" *ngIf="selectedCategories != ''">Categoría seleccionada: <b id="category-id">{{ selectedCategories ? selectedCategories.category_name : 'none' }}</b></p>
       </div>
+
+      <div class="form-group style-form-group" *ngIf="type_article != 'INTERNO'">
+        <label for="articleTittle"><b>Url del enlace:</b></label>
+        <hr class="edit-articles-hr">
+        <input id="article-link" type="text" class="form-control" id="articleLink" placeholder="" value="{{article_url}}">
+      </div>
+
     </div>
   </div>
 </div>

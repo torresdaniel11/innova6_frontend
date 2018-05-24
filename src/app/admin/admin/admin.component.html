@@ -1,6 +1,6 @@
 <div>
 
-  <div class="row">
+  <div class="row pie-container">
     <div class="col-md-12" *ngIf="windowClose">
       <div class="card">
         <div class="card-body">
@@ -44,26 +44,6 @@
     </div>
 
     <!--
-    <div class="col-md-4 personal-clear">
-      <div class="card box-shadow">
-        <div class="card-header">
-          <div class="person-tittle">Profesores</div>
-          <div class="person-badge">
-            <span class="badge badge-light">4</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 personal-clear">
-      <div class="card">
-        <div class="card-header">
-          <div class="person-tittle">Monitores</div>
-          <div class="person-badge">
-            <span class="badge badge-light">12</span>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="col-md-8 personal-clear">
       <div class="card">
         <div class="card-header">
@@ -113,6 +93,168 @@
       </div>
     </div>
     -->
+  </div>
+  <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h3>Asignar tiempo de cierre al chatbot</h3>
+          <hr>
+          <div id="alert-delay-time" class="alert alert-dismissible fade show" role="alert" [hidden]="!hideDelayAlert">
+            <span class="alert-save-delay"></span>
+            <button type="button" class="close" (click)="closeDelayAlert()" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend input-delaytime-label">
+                      <span class="input-group-text">Tiempo asignado:</span>
+                    </div>
+                    <input id="chatbot-delay" type="number" class="form-control" placeholder="" aria-label="chatDelay" aria-describedby="" [disabled]="disabledSave">
+                  </div>
+                  <div class="delaytime-format">El valor debe estar en segundos</div>
+                  <div class="row">
+                    <div class="col-sm-6 offset-6" style="text-align: right">
+                      <button type="button" class="btn btn-primary" (click)="editChatbotDelay()" [disabled]="disabledEdit">Cambiar tiempo</button>
+                      <button type="button" class="btn btn-success" (click)="saveChatbotDelay()" [disabled]="disabledSave">Guardar cambios</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4" style="margin-bottom: 15px;">
+      <div class="card">
+        <div class="card-body">
+          <h3>Total consultas a plataformas</h3>
+          <hr>
+          <div class="row">
+            <div class="col-md-6 personal-clear">
+              <div class="card box-shadow">
+                <div class="card-header">
+                  <div class="person-tittle">Moodle</div>
+                  <div class="person-badge">
+                    <span class="badge badge-light">{{moodle}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 personal-clear">
+              <div class="card">
+                <div class="card-header">
+                  <div class="person-tittle">SICUA</div>
+                  <div class="person-badge">
+                    <span class="badge badge-light">{{sicua}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12" style="text-align: right">
+              <button type="button" class="btn btn-success btn-export" data-export="platform">Exportar</button>
+            </div>
+            <div class="col-sm-12" style="display: none">
+              <table id="platform">
+                <tr>
+                  <th>Moodle</th>
+                  <th>SICUA</th>
+                </tr>
+                <tr>
+                  <td>{{moodle}}</td>
+                  <td>{{sicua}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" style="margin-bottom: 15px;">
+      <div class="card">
+        <div class="card-body">
+          <h3>Tipos de consultores</h3>
+          <hr>
+          <div class="row">
+            <div class="col-md-6 personal-clear">
+              <div class="card box-shadow">
+                <div class="card-header">
+                  <div class="person-tittle">Profesores</div>
+                  <div class="person-badge">
+                    <span class="badge badge-light">{{profesor}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 personal-clear">
+              <div class="card">
+                <div class="card-header">
+                  <div class="person-tittle">Monitores</div>
+                  <div class="person-badge">
+                    <span class="badge badge-light">{{monitor}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12" style="text-align: right">
+              <button type="button" class="btn btn-success btn-export" data-export="profile">Exportar</button>
+            </div>
+            <div class="col-sm-12" style="display: none">
+              <table id="profile">
+                <tr>
+                  <th>Profesores</th>
+                  <th>Monitores</th>
+                </tr>
+                <tr>
+                  <td>{{profesor}}</td>
+                  <td>{{monitor}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12" style="margin-bottom: 15px;">
+      <div class="card">
+        <div class="card-body">
+          <h3>Total consultas a categorías</h3>
+          <hr>
+          <div class="row">
+            <div class="col-sm-2 personal-clear" *ngFor="let category of categiries">
+              <div class="card box-shadow">
+                <div class="card-header">
+                  <div class="person-tittle">{{category.name}}</div>
+                  <div class="person-badge">
+                    <span class="badge badge-light">{{category.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12" style="text-align: right">
+              <button type="button" class="btn btn-success btn-export" data-export="category">Exportar</button>
+            </div>
+            <div class="col-sm-12" style="display: none">
+              <table id="category">
+                <tr>
+                  <th *ngFor="let category of categiries">{{category.name}}</th>
+                </tr>
+                <tr>
+                  <td *ngFor="let category of categiries">{{category.value}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

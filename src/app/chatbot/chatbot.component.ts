@@ -4,6 +4,7 @@ import { RatingModule } from 'primeng/rating';
 import { Router } from '@angular/router'
 declare var $: any;
 
+
 @Component({
   selector: 'app-chatbot',
   templateUrl: './chatbot.component.html',
@@ -20,6 +21,10 @@ export class ChatbotComponent implements OnInit {
   verFrecuentes = false;
   inputEnable: boolean;
   ratingEnable: boolean;
+  seccionExtra: boolean = false;
+  extras: any[];
+  visiteRecurso: boolean = false;
+  visitePregunta: boolean = false;
   constructor(private chatbot: ChatbotService, private ref: ChangeDetectorRef, private router: Router) {
     this.ratingEnable = true;
     this.inputEnable = true;
@@ -28,7 +33,10 @@ export class ChatbotComponent implements OnInit {
     this.input = "";
     this.mensajes = [];
     this.ref.markForCheck();
+    this.extras = []
   }
+
+  configuraciones;
 
   ngOnInit() {
     this.chatbot.estadoChat.subscribe(estado => {
@@ -41,7 +49,25 @@ export class ChatbotComponent implements OnInit {
       // HAY UNA CONVERSACION VAMOS A VER SI EXISTE EN EL BACK
       this.recuperarConversacion();
     }
-    this.printCategorias();
+    this.chatbot.getConfiguracionesChatbot().subscribe(result => {
+      this.configuraciones = result[0];
+      this.restartTimeout();
+    })
+    // this.printCategorias();
+  }
+
+  timeout;
+  restartTimeout() {
+    clearTimeout(this.timeout);
+    if (this.configuraciones == undefined) return;
+    let timeoutMilliseconds = parseInt(this.configuraciones.timeout);
+    this.timeout = setTimeout(() => { this.finalizaChatbotTimeout() }, timeoutMilliseconds);
+  }
+
+  finalizaChatbotTimeout() {
+    this.pushMensaje('chatbot', "Se finaliza chatbot por inactividad");
+    this.inputEnable = false;
+    this.cerrarChat();
   }
 
   crearConversacion() {
@@ -75,10 +101,17 @@ export class ChatbotComponent implements OnInit {
     );
   }
 
+  reiniciarChatbot() {
+    this.mensajes = [];
+    sessionStorage.removeItem("conversation_token");
+    this.crearConversacion();
+  }
+
   siguientePregunta() {
     if (this.conversation_token == null || this.conversation_token == undefined) {
       console.log("pere tantico")
     } else {
+      this.restartTimeout();
       this.chatbot.consultarPreguntaARealizar(this.conversation_token).subscribe(
         result => {
           this.currentPregunta = result;
@@ -86,6 +119,13 @@ export class ChatbotComponent implements OnInit {
           if (result['question_replace']) {
             // CATEGORIAS
             this.arrayCategorias().then(methodResult => {
+              this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
+            }).catch(error => {
+              console.log(error);
+            });
+          } else if (result['question_type_user']) {
+            //TIPO DE USUARIO
+            this.arrayTiposDeUsuario().then(methodResult => {
               this.pushMensajeConOpciones('chatbot', pregunta, methodResult);
             }).catch(error => {
               console.log(error);
@@ -143,6 +183,13 @@ export class ChatbotComponent implements OnInit {
     this.enviar();
   }
 
+  setPregunta(opcion:string){
+    if (!this.visitePregunta) {
+      this.visitePregunta = true;
+      this.set(opcion);
+    }
+  }
+
   //level 5 categorias
   enviarRespuesta(userInput) {
     this.pushMensaje('usuario', userInput)
@@ -157,22 +204,6 @@ export class ChatbotComponent implements OnInit {
       console.log(<any>error);
       this.siguientePregunta();
     });
-  }
-
-  printCategorias() {
-    return new Promise((resolve, reject) => {
-      var result_string: string = "";
-      this.chatbot.getCategorias().subscribe(result => {
-        for (var i = 0; i < Object.keys(result).length; i++) {
-          let cat = result[i].category_name;
-          result_string += "<span class='hola'>" + cat + "</span>";
-        }
-        resolve(result_string);
-      }, error => {
-        console.log(<any>error);
-        reject(error.error);
-      })
-    })
   }
 
   arrayCategorias() {
@@ -207,6 +238,22 @@ export class ChatbotComponent implements OnInit {
     })
   }
 
+  arrayTiposDeUsuario() {
+    return new Promise((resolve, reject) => {
+      var result_array = [];
+      this.chatbot.getTiposDeUsuario().subscribe(result => {
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let tipoDeUsuario = result[i].type_user_name;
+          result_array.push(tipoDeUsuario);
+        }
+        resolve(result_array);
+      }, error => {
+        console.log(<any>error);
+        reject(error.error);
+      })
+    })
+  }
+
   arrayRecursos() {
     return new Promise((resolve, reject) => {
       var result_array = [];
@@ -224,7 +271,10 @@ export class ChatbotComponent implements OnInit {
   }
 
   navegarRecurso(tipo, url, nombre) {
-    this.set("Quiero ver: " + nombre);
+    if (!this.visiteRecurso) {
+      this.visiteRecurso = true;
+      this.set("Quiero ver: " + nombre);
+    }
     if (tipo == "INTERNO") {
       this.router.navigate([url]);
     } else if (tipo == "PDF" || tipo == "YOUTUBE" || tipo == "PAGE_WEB") {
@@ -278,7 +328,6 @@ export class ChatbotComponent implements OnInit {
     this.scrollBottom();
   }
 
-
   marcarCalificacion(event) {
     this.set(event.value + "")
     this.ratingEnable = false;
@@ -302,6 +351,29 @@ export class ChatbotComponent implements OnInit {
   scrollBottom() {
     setTimeout(function() { $("#chat_body").scrollTop($("#chat_body")[0].scrollHeight); }, 10)
   }
+
+  ver(param: string) {
+    this.seccionExtra = true;
+    if (param == 'todas') {
+      this.chatbot.getTodasLasFrecuentes().subscribe(result => {
+        console.log(result);
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let recurso = result[i]['frequent_questions_name'];
+          this.extras.push(recurso);
+        }
+      });
+    } else if (param = 'sugerencias') {
+      this.chatbot.getSugerencias(this.conversation_token).subscribe(result => {
+        console.log(result);
+        for (var i = 0; i < Object.keys(result).length; i++) {
+          let recurso = result[i]['frequent_questions_name'];
+          this.extras.push(recurso);
+        }
+      });
+    }
+
+  }
+
 
 
 }
